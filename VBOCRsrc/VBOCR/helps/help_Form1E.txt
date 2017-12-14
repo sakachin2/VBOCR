@@ -1,0 +1,19 @@
+(Form1E)                2017/12/10
+Extract Text from image file.
+Zooming dose not affect extracting,
+but you have to adjust up-and-down by Rotate button.
+Push X button on Upper Right corner.
+
+"Extract":
+  Extract text from image document.
+  This action take a little bit time.
+  Extracted text is show to bellow.
+
+"Language":
+  You can select another Language if LanguagePack is installed.
+  On Windows10, install LanguagePack as following.
+    ControlPanel-->Language and Locale-->Language, Add Language
+    Push "Option" on the right of the Language, then Download & Install.
+    Another way from "Settings", you can install the Language Pack,
+    "Application","Optional Feature", ... "OCR",Download & Install. 
+
