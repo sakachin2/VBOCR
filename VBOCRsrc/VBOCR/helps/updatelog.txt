@@ -1,0 +1,16 @@
+V1.02 : 2017/12/24  gitup   *******************************************************
+'v113 2017/12/22 put Zorder Top
+           Form1,vb form2.vb
+'v110 2017/12/22 Test change of resource culture
+           Form1.vb class2.vb
+'v109 2017/12/21 save setting of Selected Language 
+           Form1.vb class2.vb
+'v108 2017/12/21 apply zoom rate of marking to also orgBMP
+           Form1.vb
+'v107 2017/12/21 keep Form1 client size (setting:AS_Form1_ClientSize)
+           Form1.Designer.vb
+'v106 2017/12/20 partially extract from image(box by mouse dragging)
+           class3.vb form1.vb class2.vb
+'v001 2017/12/15 at implementing VBI2KWRT
+      	Form1.vb
+V1.01 : 2017/12/14 released *******************************************************

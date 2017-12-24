@@ -1,5 +1,9 @@
 (UTF8 encoding)
 *********************************************************************************************
+V1.02 : 2017/12/21 
+
+Supports partial extracting in the box by mouse dragging.
+
 V1.01 : 2017/12/14 (1st release)
 Tool of TextExtraction from image file using Microsoft OCR Library for Windows (Windows10).
 You can get image file by "Windows Fax and Scan" etc.

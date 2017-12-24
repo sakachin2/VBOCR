@@ -53,6 +53,54 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("512, 435")>  _
+        Public Property AS_Form1ClientSize() As Global.System.Drawing.Size
+            Get
+                Return CType(Me("AS_Form1ClientSize"),Global.System.Drawing.Size)
+            End Get
+            Set
+                Me("AS_Form1ClientSize") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property CFG_LangIndex() As Integer
+            Get
+                Return CType(Me("CFG_LangIndex"),Integer)
+            End Get
+            Set
+                Me("CFG_LangIndex") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("438, 261")>  _
+        Public Property AS_Form2ClientSize() As Global.System.Drawing.Size
+            Get
+                Return CType(Me("AS_Form2ClientSize"),Global.System.Drawing.Size)
+            End Get
+            Set
+                Me("AS_Form2ClientSize") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("en-GB")>  _
+        Public Property CFG_Culture() As String
+            Get
+                Return CType(Me("CFG_Culture"),String)
+            End Get
+            Set
+                Me("CFG_Culture") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

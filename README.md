@@ -1,11 +1,11 @@
-# VBOCR                    2017/12/14 First Release
+ï»¿# VBOCR                    2017/12/24 v1.02
 
 Tool of TextExtraction from image file using Microsoft OCR Library for Windows (Windows10).
-Too install, double click SetupVBOCR.msi.
+To install, double click SetupVBOCR.msi.
 
 *************************************************************************
 
 (Japanese)
-Windows10:Microsoft OCR Library for Windows ‚ğ—˜—p‚µ‚Ä
-ƒXƒLƒƒƒi[‚Å“Ç‚İæ‚Á‚½ƒCƒ[ƒWƒtƒ@ƒCƒ‹‚©‚çŠ¿š‚©‚È¬‚¶‚è•¶‚ğ“Ç‚İæ‚è‚Ü‚·
-ƒCƒ“ƒXƒg[ƒ‹‚Í SetupVBOCR.msi ‚ğƒ_ƒuƒ‹ƒNƒŠƒbƒN‚µ‚Ä‚­‚¾‚³‚¢
+Windows10:Microsoft OCR Library for Windows ã‚’åˆ©ç”¨ã—ã¦
+ã‚¹ã‚­ãƒ£ãƒŠãƒ¼ã§èª­ã¿å–ã£ãŸã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰æ¼¢å­—ã‹ãªæ··ã˜ã‚Šæ–‡ã‚’èª­ã¿å–ã‚Šã¾ã™
+ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã¯ SetupVBOCR.msi ã‚’ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯ã—ã¦ãã ã•ã„

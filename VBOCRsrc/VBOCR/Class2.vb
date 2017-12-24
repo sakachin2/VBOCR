@@ -1,4 +1,9 @@
-﻿'CID:''+v@@@R~:#72                             update#=  135;         ''~v@@@I~
+﻿'CID:''+v110R~:#72                             update#=  151;         ''+v110R~
+'************************************************************************************''~v106I~
+'v110 2017/12/22 Test change of resource culture                       ''+v110I~
+'v109 2017/12/21 save setting of Selected Language                     ''~v109I~
+'v106 2017/12/20 partially extract from image(box by mouse dragging)   ''~v106I~
+'************************************************************************************''~v106I~
 Imports System.Drawing.Imaging                                         ''~v@@@I~
 Imports System.IO                                                      ''~v@@@I~
 Imports System.Runtime.CompilerServices                                ''~v@@@I~
@@ -24,25 +29,41 @@ Public Class Cocr                                                      ''~v@@@R~
     Private fileBMP As Bitmap                                          ''~v@@@I~
     Private result As OcrResult
     Private swOK As Boolean ''~v@@@I~
+    Private clipRect As Rectangle                                       ''~v106I~''~v109R~
+    Private swRectBMP As Boolean                                       ''~v106I~
+    Private bmpRect As Bitmap                                          ''~v106I~
+    Private scaleNew As Double                                         ''~v106I~
     '**************************************************************************************''~v@@@I~
     Public Sub New()                                                   ''~v@@@R~
     End Sub                                                            ''~v@@@I~
     '**************************************************************************************''~v@@@I~
-    Public Sub setupComboBoxLang(Pcb As ToolStripComboBox)             ''~v@@@R~
+    Public Function setupComboBoxLang(Pcb As ToolStripComboBox, Pidxcfg As Integer) As Integer ''~v109I~
         Dim cb As ToolStripComboBox = Pcb                              ''~v@@@R~
         Dim defaulttag As String = Language.CurrentInputMethodLanguageTag ''~v@@@I~
         setupDataTableLang() 'setup tbLang                             ''~v@@@I~
         cb.ComboBox.DataSource = tbLang                                ''~v@@@I~
         cb.ComboBox.DisplayMember = LANG_NAME                          ''~v@@@I~
         cb.ComboBox.ValueMember = LANG_TAG                             ''~v@@@I~
-'       cb.Text = "Language"                                           ''~v@@@R~
-        For Each row as DataRow In tbLang.Rows                         ''+v@@@R~
-            Dim tag As String = row(LANG_TAG)                          ''~v@@@I~
-            If tag.CompareTo(defaulttag) = 0 Then                      ''~v@@@I~
-                cb.Text = row(LANG_NAME)                               ''~v@@@I~
-            End If                                                     ''~v@@@I~
+        '       cb.Text = "Language"                                           ''~v@@@R~
+        Dim idx As Integer = 0                                         ''~v109I~
+        For Each row As DataRow In tbLang.Rows                         ''~v@@@R~
+            Dim tag As String = CType(row(LANG_TAG), String)                          ''~v@@@I~
+            If (Pidxcfg < 0) Then ' Not selected Then initially        ''~v109I~
+                If tag.CompareTo(defaulttag) = 0 Then                  ''~v109I~
+                    cb.Text = CType(row(LANG_NAME), String)            ''~v109I~
+                    cb.SelectedIndex = idx                             ''~v109I~
+                    ''~v109I~
+                End If                                                 ''~v109I~
+            Else                                                       ''~v109I~
+                If idx = Pidxcfg Then    'previously selected          ''~v109I~
+                    cb.Text = CType(row(LANG_NAME), String)            ''~v109I~
+                    cb.SelectedIndex = idx                             ''~v109I~
+                End If                                                 ''~v109I~
+            End If                                                     ''~v109I~
+            idx += 1                                                   ''~v109I~
         Next                                                           ''~v@@@I~
-    End Sub                                                            ''~v@@@I~
+        Return cb.SelectedIndex                                        ''~v109I~
+    End Function                                                          ''~v@@@I~
     '**************************************************                ''~v@@@I~
     Private Sub setupDataTableLang()                                   ''~v@@@I~
         Dim tb As New DataTable()                                      ''~v@@@I~
@@ -52,19 +73,53 @@ Public Class Cocr                                                      ''~v@@@R~
         For Each item As Language In langlist                          ''~v@@@I~
             Dim row As DataRow = tb.NewRow()                           ''~v@@@I~
             row(LANG_TAG) = item.LanguageTag                           ''~v@@@I~
-            row(LANG_NAME) = item.DisplayName                          ''~v@@@I~
+            If Form1.swLangJP Then                                            ''+v110I~
+                row(LANG_NAME) = item.DisplayName                          ''~v@@@I~
+            Else                                                         ''+v110I~
+                row(LANG_NAME) = item.NativeName                           ''+v110I~
+            End If                                                       ''+v110I~
             tb.Rows.Add(row)                                           ''~v@@@I~
         Next                                                           ''~v@@@I~
         tb.AcceptChanges()                                             ''~v@@@I~
         tbLang = tb                                                    ''~v@@@I~
     End Sub                                                            ''~v@@@I~
     '**************************************************                ''~v@@@I~
-    Public Function getSelectedLangTag(Pcb As ToolStripComboBox) As String ''~v@@@R~
+    Public Function getSelectedLangTag(Pcb As ToolStripComboBox, ByRef Ppidxlang As Integer) As String ''~v@@@R~''~v109R~
         Dim cb As ToolStripComboBox = Pcb                              ''~v@@@R~
         Dim idx As Integer = cb.SelectedIndex                          ''~v@@@I~
-        Dim tag As String = tbLang.Rows(idx)(LANG_TAG)                 ''~v@@@I~
+        Dim tag As String = CType(tbLang.Rows(idx)(LANG_TAG), String)                 ''~v@@@I~
+        Ppidxlang = idx                                                ''~v109I~
         Return tag                                                     ''~v@@@I~
     End Function                                                       ''~v@@@I~
+    '**************************************************                ''~v106I~
+    '* set clip box info before extact                                 ''~v109I~
+    Public Sub setRect(PswRectBMP As Boolean, PbmpRect As Bitmap, PscaleNew As Double, PclipRect As Rectangle) ''~v106I~''~v109R~
+        swRectBMP = PswRectBMP                                           ''~v106I~
+        bmpRect = PbmpRect                                               ''~v106I~
+        scaleNew = PscaleNew                                             ''~v106I~
+        clipRect = PclipRect                                               ''~v106I~''~v109R~
+    End Sub                                                            ''~v106I~
+    '**************************************************                ''~v106I~
+    Public Function cutBMPRect(PorgBMP As Bitmap) As Bitmap            ''~v106I~
+        Dim xx, yy, ww, hh As Integer                                    ''~v106I~
+        xx = CType(clipRect.X / scaleNew, Integer) 'dest and src position''~v106R~''~v109R~
+        yy = CType(clipRect.Y / scaleNew, Integer)                           ''~v106I~''~v109R~
+        ww = CType(clipRect.Width / scaleNew, Integer)                       ''~v106I~''~v109R~
+        hh = CType(clipRect.Height / scaleNew, Integer)                      ''~v106I~''~v109R~
+        Dim tgtRect As Rectangle = New Rectangle(xx, yy, ww, hh)       ''~v106I~
+        Dim bmp As Bitmap = New Bitmap(PorgBMP.Width, PorgBMP.Height)    ''~v106I~
+        Dim g = Graphics.FromImage(bmp)                                ''~v106I~
+        Dim unit As GraphicsUnit = GraphicsUnit.Pixel                    ''~v106R~
+        g.DrawImage(PorgBMP, tgtRect, xx, yy, ww, hh, unit)              ''~v106R~
+        g.Dispose()                                                    ''~v106I~
+        Trace.W("cutBMPRect org W=" & PorgBMP.Width & ",H=" & PorgBMP.Height) ''~v106I~
+        Trace.W("cutBMPRect clipRect X=" & clipRect.X & ",Y=" & clipRect.Y & ",W=" & clipRect.Width & ",H=" & clipRect.Height) ''~v106I~''~v109R~
+        Trace.W("cutBMPRect scale=" & scaleNew)                        ''~v106I~
+        Trace.W("cutBMPRect xx=" & xx & ",yy=" & yy & ",ww=" & ww & ",hh=" & hh) ''~v106I~
+        Trace.W("cutBMPRect clip W=" & bmp.Width & ",H=" & bmp.Height) ''~v106I~
+        '       bmp.Save("W:\cutbmprect.bmp", ImageFormat.BMP) '@@@@test        ''~v106R~''~v109R~
+        Return bmp                                                     ''~v106I~
+    End Function                                                           ''~v106I~
 #If False Then                                                              ''~v@@@I~
     '*************************************************************     ''~v@@@I~
     Public Function extractText(Pfnm As String, PfileBMP As Bitmap, Ptag As String, ByRef Pptext As String) As Boolean ''~v@@@R~
@@ -81,6 +136,9 @@ Public Class Cocr                                                      ''~v@@@R~
     Public Function extractText(Pfnm As String, PfileBMP As Bitmap, Ptag As String, ByRef Pptext As String) As Boolean ''~v@@@R~
         imageFilename = Pfnm                                           ''~v@@@I~
         fileBMP = PfileBMP                                             ''~v@@@I~
+        If swRectBMP Then                                                   ''~v106I~
+            fileBMP = cutBMPRect(fileBMP)                              ''~v106I~
+        End If                                                         ''~v106I~
         xText = ""                                                     ''~v@@@I~
         result = Nothing                                               ''~v@@@I~
         Dim t As Task = Task.Run(Async Function()                                  ''~v@@@I~
@@ -200,7 +258,7 @@ Public Class Cocr                                                      ''~v@@@R~
                 '               Trace.W("Line Text=" & line.Text)                      ''~v@@@R~
                 For Each word As OcrWord In line.Words                 ''~v@@@I~
                     Dim brect As Windows.Foundation.Rect = word.BoundingRect ''~v@@@I~
-                    Dim rect As Rectangle = New System.Drawing.Rectangle(brect.X, brect.Y, brect.Width, brect.Height) ''~v@@@I~
+                    Dim rect As Rectangle = New System.Drawing.Rectangle(CType(brect.X, Integer), CType(brect.Y, Integer), CType(brect.Width, Integer), CType(brect.Height, Integer)) ''~v@@@I~
                     '                   Trace.W("Word Text=" & word.Text & ",X=" & brect.X & ",Y=" & brect.Y & ",W=" & brect.Width & ",H=" & brect.Height)''~v@@@R~
                     g.FillRectangle(br, rect)                          ''~v@@@I~
                     g.DrawRectangle(Pens.Red, rect)                    ''~v@@@I~

@@ -2,9 +2,9 @@
 <!--  codepage,65001:utf8, 932:shift_jis, 28591:iso8859-1; 1252:ansi latin1   LCID 1041:ja, 1033:en-us            -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 <!--
-    <Product Id="B2C2974C-FA50-47D6-B514-31588DB39284" Name="sampleVBOCR" Language="1033" Version="1.0.1" Manufacturer="sakachin2" UpgradeCode="5DFB9A2C-9768-42E2-A3FF-512821010F62">
+    <Product Id="B2C2974C-FA50-47D6-B514-31588DB39284" Name="sampleVBOCR" Language="1033" Version="1.0.2" Manufacturer="sakachin2" UpgradeCode="5DFB9A2C-9768-42E2-A3FF-512821010F62">
 -->
-    <Product Id="*" Name="sampleVBOCR" Language="1033" Version="1.0.1" Manufacturer="sakachin2" UpgradeCode="5DFB9A2C-9768-42E2-A3FF-512821010F62">
+    <Product Id="*" Name="sampleVBOCR" Language="1033" Version="1.0.2" Manufacturer="sakachin2" UpgradeCode="5DFB9A2C-9768-42E2-A3FF-512821010F62">
         <Package Description="Extract text in image file" Comments="OCR tool sampleVBOCR installer" InstallerVersion="200" Compressed="yes" />
         <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
         <Directory Id="TARGETDIR" Name="SourceDir">

@@ -61,11 +61,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  (Form1)                          2017/12/10
-        '''ファイルからテキストを読み取ります
-        '''ズームは読み取りに影響しませんが
-        '''縦横は回転ボタンで調整してください
-        '''閉じるときは 右上角の X ボタンを押してください
+        '''  文書ファイルからテキストを読み取ります
+        '''
+        '''ズームは読み取りに影響しませんが縦横は回転ボタンで調整してください
+        '''読み取った部分はマーク表示されます
+        '''縦書き横書き混じりの文書の場合、
+        '''縦書き文書を横読みすることがあります
+        '''マウスドラッグで囲んでその部分だけ読み取りすることもできます
+        '''部分読み取りすると結果が別のフォームに表示されます
+        '''OKボタンまたはカット＆ペーストで取り込んでください
         '''
         '''&quot;読み取り&quot;:
         '''  読み取り結果が下段のテキストフォームに表示されます
@@ -78,7 +82,8 @@ Namespace My.Resources
         '''    追加したら右端のオプション--&gt;言語パックをダウンロードしてインストール
         '''    設定からも&quot;アプリ&quot;,オプション機能の追加、... 光学式文字認識から 
         '''    言語パックのダウンロードができます
-        ''' に類似しているローカライズされた文字列を検索します。
+        '''
+        '''(Form1)                          2017/12/2 [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         '''</summary>
         Friend ReadOnly Property help_Form1() As String
             Get
@@ -87,25 +92,68 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  (Form1E)                2017/12/10
-        '''Extract Text from image file.
+        '''  Extract Text from image file.
+        '''
         '''Zooming dose not affect extracting,
         '''but you have to adjust up-and-down by Rotate button.
-        '''Push X button on Upper Right corner.
+        '''Extracted potions  are marked.
+        '''When vertical and horizontal writing are mixed,
+        '''vertical writing may be recognized horizontally.
+        '''You can specify a portion to be extracted by mouse dragging.
+        '''Extracted text partially is shown on another form.
+        '''Use OK button or Copy &amp; Paste to take in the text.
         '''
         '''&quot;Extract&quot;:
         '''  Extract text from image document.
         '''  This action take a little bit time.
-        '''  Extracted text is show to bellow.
-        '''
-        '''&quot;Language&quot;:
-        '''  You can select another Language if LanguagePack is installed.
-        '''  On Windows10, install LanguagePack as following.
-        '''    ControlPanel--&gt;Language and Locale--&gt;Language, Add La [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        '''  [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         '''</summary>
         Friend ReadOnly Property help_Form1E() As String
             Get
                 Return ResourceManager.GetString("help_Form1E", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  マウスドラッグで囲んだ部分の読み取りテキストです
+        '''
+        '''カット＆ペーストでメインフォームに取り込んでください
+        '''OKボタンはメインフォームのテキストボックスに送ります、その場合
+        '''送り先はメインフォーム上でカーソルをあらかじめ設定しておきます
+        '''マウスで反転しておくとその部分が置換されます
+        '''
+        '''(Form2)                          2017/12/21
+        ''' に類似しているローカライズされた文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property help_Form2() As String
+            Get
+                Return ResourceManager.GetString("help_Form2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Partially extracted Text in the clipped Box.
+        '''
+        '''Copy then Paste to Main form.
+        '''Or, OK button sends the text to the Main form.
+        '''Specify destination range in advance by mouse.
+        '''Reversed range will be replaced.
+        '''
+        '''(Form2E)                          2017/12/21
+        ''' に類似しているローカライズされた文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property help_Form2E() As String
+            Get
+                Return ResourceManager.GetString("help_Form2E", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  読み取り結果は空でした に類似しているローカライズされた文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property WARN_EXTRACTED_NULLSTR() As String
+            Get
+                Return ResourceManager.GetString("WARN_EXTRACTED_NULLSTR", resourceCulture)
             End Get
         End Property
     End Module

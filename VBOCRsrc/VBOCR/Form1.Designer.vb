@@ -33,6 +33,8 @@ Partial Class Form1
         Me.ToolStripComboBoxLang = New System.Windows.Forms.ToolStripComboBox()
         Me.ToolStripButtonExtract = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButtonHelp = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripTextBoxCulture = New System.Windows.Forms.ToolStripTextBox()
+        Me.ToolStripButtonApplyCulture = New System.Windows.Forms.ToolStripButton()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.PanelCenter = New System.Windows.Forms.Panel()
@@ -50,176 +52,129 @@ Partial Class Form1
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButtonOpen, Me.ToolStripButtonSave, Me.ToolStripButtonZoomIn, Me.ToolStripButtonZoomOut, Me.ToolStripButtonRotateCCW, Me.ToolStripButtonRotateCW, Me.ToolStripComboBoxLang, Me.ToolStripButtonExtract, Me.ToolStripButtonHelp})
-        Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
+        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButtonOpen, Me.ToolStripButtonSave, Me.ToolStripButtonZoomIn, Me.ToolStripButtonZoomOut, Me.ToolStripButtonRotateCCW, Me.ToolStripButtonRotateCW, Me.ToolStripComboBoxLang, Me.ToolStripButtonExtract, Me.ToolStripButtonHelp, Me.ToolStripTextBoxCulture, Me.ToolStripButtonApplyCulture})
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(512, 42)
-        Me.ToolStrip1.TabIndex = 0
-        Me.ToolStrip1.Text = "ToolStrip1"
         '
         'ToolStripButtonOpen
         '
+        resources.ApplyResources(Me.ToolStripButtonOpen, "ToolStripButtonOpen")
         Me.ToolStripButtonOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButtonOpen.Image = CType(resources.GetObject("ToolStripButtonOpen.Image"), System.Drawing.Image)
-        Me.ToolStripButtonOpen.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.ToolStripButtonOpen.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButtonOpen.Name = "ToolStripButtonOpen"
-        Me.ToolStripButtonOpen.Size = New System.Drawing.Size(36, 39)
-        Me.ToolStripButtonOpen.Text = "Open"
-        Me.ToolStripButtonOpen.ToolTipText = "ファイルを開く"
         '
         'ToolStripButtonSave
         '
+        resources.ApplyResources(Me.ToolStripButtonSave, "ToolStripButtonSave")
         Me.ToolStripButtonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButtonSave.Image = CType(resources.GetObject("ToolStripButtonSave.Image"), System.Drawing.Image)
-        Me.ToolStripButtonSave.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.ToolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButtonSave.Name = "ToolStripButtonSave"
-        Me.ToolStripButtonSave.Size = New System.Drawing.Size(36, 39)
-        Me.ToolStripButtonSave.Text = "ToolStripButton1"
-        Me.ToolStripButtonSave.ToolTipText = "テキストを保存"
         '
         'ToolStripButtonZoomIn
         '
+        resources.ApplyResources(Me.ToolStripButtonZoomIn, "ToolStripButtonZoomIn")
         Me.ToolStripButtonZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButtonZoomIn.Image = CType(resources.GetObject("ToolStripButtonZoomIn.Image"), System.Drawing.Image)
-        Me.ToolStripButtonZoomIn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.ToolStripButtonZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButtonZoomIn.Name = "ToolStripButtonZoomIn"
-        Me.ToolStripButtonZoomIn.Size = New System.Drawing.Size(36, 39)
-        Me.ToolStripButtonZoomIn.Text = "ToolStripButton2"
-        Me.ToolStripButtonZoomIn.ToolTipText = "ズームアップ 拡大"
         '
         'ToolStripButtonZoomOut
         '
+        resources.ApplyResources(Me.ToolStripButtonZoomOut, "ToolStripButtonZoomOut")
         Me.ToolStripButtonZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButtonZoomOut.Image = CType(resources.GetObject("ToolStripButtonZoomOut.Image"), System.Drawing.Image)
-        Me.ToolStripButtonZoomOut.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.ToolStripButtonZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButtonZoomOut.Name = "ToolStripButtonZoomOut"
-        Me.ToolStripButtonZoomOut.Size = New System.Drawing.Size(36, 39)
-        Me.ToolStripButtonZoomOut.Text = "ToolStripButton2"
-        Me.ToolStripButtonZoomOut.ToolTipText = "ズームアウト 縮小"
         '
         'ToolStripButtonRotateCCW
         '
+        resources.ApplyResources(Me.ToolStripButtonRotateCCW, "ToolStripButtonRotateCCW")
         Me.ToolStripButtonRotateCCW.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButtonRotateCCW.Image = CType(resources.GetObject("ToolStripButtonRotateCCW.Image"), System.Drawing.Image)
-        Me.ToolStripButtonRotateCCW.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.ToolStripButtonRotateCCW.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButtonRotateCCW.Name = "ToolStripButtonRotateCCW"
-        Me.ToolStripButtonRotateCCW.Size = New System.Drawing.Size(36, 39)
-        Me.ToolStripButtonRotateCCW.Text = "ToolStripButton2"
-        Me.ToolStripButtonRotateCCW.ToolTipText = "左90度回転"
         '
         'ToolStripButtonRotateCW
         '
+        resources.ApplyResources(Me.ToolStripButtonRotateCW, "ToolStripButtonRotateCW")
         Me.ToolStripButtonRotateCW.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButtonRotateCW.Image = CType(resources.GetObject("ToolStripButtonRotateCW.Image"), System.Drawing.Image)
-        Me.ToolStripButtonRotateCW.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.ToolStripButtonRotateCW.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButtonRotateCW.Name = "ToolStripButtonRotateCW"
-        Me.ToolStripButtonRotateCW.Size = New System.Drawing.Size(36, 39)
-        Me.ToolStripButtonRotateCW.Text = "ToolStripButton2"
-        Me.ToolStripButtonRotateCW.ToolTipText = "右90度回転"
         '
         'ToolStripComboBoxLang
         '
+        resources.ApplyResources(Me.ToolStripComboBoxLang, "ToolStripComboBoxLang")
         Me.ToolStripComboBoxLang.Name = "ToolStripComboBoxLang"
-        Me.ToolStripComboBoxLang.Size = New System.Drawing.Size(75, 42)
-        Me.ToolStripComboBoxLang.Text = "言語"
-        Me.ToolStripComboBoxLang.ToolTipText = "読み取りテキストの言語を指定する"
         '
         'ToolStripButtonExtract
         '
+        resources.ApplyResources(Me.ToolStripButtonExtract, "ToolStripButtonExtract")
         Me.ToolStripButtonExtract.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButtonExtract.Image = CType(resources.GetObject("ToolStripButtonExtract.Image"), System.Drawing.Image)
-        Me.ToolStripButtonExtract.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.ToolStripButtonExtract.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButtonExtract.Name = "ToolStripButtonExtract"
-        Me.ToolStripButtonExtract.Size = New System.Drawing.Size(53, 39)
-        Me.ToolStripButtonExtract.Text = "ToolStripButton1"
-        Me.ToolStripButtonExtract.ToolTipText = "画像からテキストを読み取る"
         '
         'ToolStripButtonHelp
         '
+        resources.ApplyResources(Me.ToolStripButtonHelp, "ToolStripButtonHelp")
         Me.ToolStripButtonHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButtonHelp.Image = CType(resources.GetObject("ToolStripButtonHelp.Image"), System.Drawing.Image)
-        Me.ToolStripButtonHelp.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.ToolStripButtonHelp.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.ToolStripButtonHelp.Name = "ToolStripButtonHelp"
-        Me.ToolStripButtonHelp.Size = New System.Drawing.Size(36, 39)
-        Me.ToolStripButtonHelp.Text = "ToolStripButton1"
-        Me.ToolStripButtonHelp.ToolTipText = "ヘルプ"
+        '
+        'ToolStripTextBoxCulture
+        '
+        resources.ApplyResources(Me.ToolStripTextBoxCulture, "ToolStripTextBoxCulture")
+        Me.ToolStripTextBoxCulture.Name = "ToolStripTextBoxCulture"
+        '
+        'ToolStripButtonApplyCulture
+        '
+        resources.ApplyResources(Me.ToolStripButtonApplyCulture, "ToolStripButtonApplyCulture")
+        Me.ToolStripButtonApplyCulture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ToolStripButtonApplyCulture.Name = "ToolStripButtonApplyCulture"
         '
         'StatusStrip1
         '
+        resources.ApplyResources(Me.StatusStrip1, "StatusStrip1")
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 413)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(512, 22)
-        Me.StatusStrip1.TabIndex = 1
-        Me.StatusStrip1.Text = "StatusStrip1"
         '
         'ToolStripStatusLabel1
         '
+        resources.ApplyResources(Me.ToolStripStatusLabel1, "ToolStripStatusLabel1")
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(0, 17)
         '
         'PanelCenter
         '
+        resources.ApplyResources(Me.PanelCenter, "PanelCenter")
         Me.PanelCenter.Controls.Add(Me.PanelPictureBox)
         Me.PanelCenter.Controls.Add(Me.TextBox1)
-        Me.PanelCenter.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PanelCenter.Location = New System.Drawing.Point(0, 42)
         Me.PanelCenter.Name = "PanelCenter"
-        Me.PanelCenter.Size = New System.Drawing.Size(512, 371)
-        Me.PanelCenter.TabIndex = 2
         '
         'PanelPictureBox
         '
-        Me.PanelPictureBox.AutoScroll = True
+        resources.ApplyResources(Me.PanelPictureBox, "PanelPictureBox")
         Me.PanelPictureBox.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.PanelPictureBox.Controls.Add(Me.PictureBox1)
-        Me.PanelPictureBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PanelPictureBox.Location = New System.Drawing.Point(0, 0)
         Me.PanelPictureBox.Name = "PanelPictureBox"
-        Me.PanelPictureBox.Size = New System.Drawing.Size(512, 254)
-        Me.PanelPictureBox.TabIndex = 1
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
+        resources.ApplyResources(Me.PictureBox1, "PictureBox1")
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(521, 254)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
         'TextBox1
         '
-        Me.TextBox1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TextBox1.Location = New System.Drawing.Point(0, 254)
-        Me.TextBox1.Multiline = True
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox1.Size = New System.Drawing.Size(512, 117)
-        Me.TextBox1.TabIndex = 0
         '
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        resources.ApplyResources(Me.OpenFileDialog1, "OpenFileDialog1")
+        '
+        'SaveFileDialog1
+        '
+        resources.ApplyResources(Me.SaveFileDialog1, "SaveFileDialog1")
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(512, 435)
+        Me.ClientSize = Global.VBOCR.My.MySettings.Default.AS_Form1ClientSize
         Me.Controls.Add(Me.PanelCenter)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.ToolStrip1)
+        Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", Global.VBOCR.My.MySettings.Default, "AS_Form1ClientSize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.Name = "Form1"
-        Me.Text = "VBOCR"
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
@@ -252,4 +207,6 @@ Partial Class Form1
     Friend WithEvents ToolStripButtonHelp As ToolStripButton
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
+    Friend WithEvents ToolStripTextBoxCulture As ToolStripTextBox
+    Friend WithEvents ToolStripButtonApplyCulture As ToolStripButton
 End Class

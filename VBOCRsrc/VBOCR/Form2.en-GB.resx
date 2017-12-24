@@ -117,20 +117,54 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="help_Form1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\helps\help_Form1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ToolStripButtonOK.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
+        0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
+        bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
+        VzOOpHI7Jr376Hi9ogHqFIANO0/MmmmbmSmm9a8ze+I4MrNWAdjtoJgWcx+PSzg166yZZ8xM8XvXDix9
+        c4jIqFYAjoriBV9AhEPv1mH/sonogha0afbZMMZz+yreTGyhpusHwtNNCsA5U1zS4BLxzJIfg299qO32
+        Ir7UJtZfftyATqeT+8o2D8JSjQrAJblrncYL7ZJ2+bfaFnC/1S1NjL3diRat7qrO7wLRP3HjWsojBeCo
+        mDEo5mNjuweFGvjWg2EBhCbpkW78htSHHwRyNdmgAFzPEee2iFkzayy2OLXzT4gr6UdUnlXrullsxxQ+
+        kx0g8BTA3aZlButjSTyjODq/WcQcW/B/Je4OQhLvKQDnzN1mp0nnkvAhR8VuMzNrpm1mpjgkoVwB/v8D
+        TgDQASA1MVpwzwAAAABJRU5ErkJggg==
+</value>
   </data>
-  <data name="help_Form1E" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\helps\help_Form1E.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;shift_jis</value>
+  <data name="ToolStripButtonHelp.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        D9i7RYB/ATSOJw8vfd7HAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="help_Form2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\helps\help_Form2.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="help_Form2E" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\helps\help_Form2E.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;shift_jis</value>
-  </data>
-  <data name="WARN_EXTRACTED_NULLSTR" xml:space="preserve">
-    <value>読み取り結果は空でした</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Clipout Text</value>
   </data>
 </root>
