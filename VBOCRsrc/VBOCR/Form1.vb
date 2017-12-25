@@ -1,5 +1,9 @@
-﻿'CID:''+v113R~:#72                             update#=  227;         ''~v113R~
+﻿'CID:''+v110R~:#72                             update#=  249;         ''~v110R~
 '************************************************************************************''~v006I~''~v001I~
+'va04 2017/12/25 save cut image to file                                ''~va04I~
+'va03 2017/12/25 set default extension to saveas dialog                ''~va03I~
+'va02 2017/12/25 status msg need to be cleared                         ''~va02I~
+'va01 2017/12/25 mousedow did not cleared swRectBMP(do partial extracting)''~va01I~
 'v113 2017/12/22 put Zorder Top                                        ''~v113I~
 'v110 2017/12/22 Test change of resource culture                       ''~v110I~
 'v109 2017/12/21 save setting of Selected Language                     ''~v109I~
@@ -20,10 +24,13 @@ Public Class Form1                                                     ''~v@@@R~
     Const SCALE_RATE = 0.1                                               ''~v@@@I~
     Const SCALE_LIMIT_LOW = 0.01                                       ''~v@@@I~
     Const LANG_TAG_JP = "ja"                                             ''~v@@@I~
+    Private imageSaveFilterIndex As Integer = 0                        ''~va04I~
+    Private imageSaveFilename As String = ""                             ''~va04I~
     Private imageFileFilterIndex As Integer = 0
     Private imageFileName As String = ""
     '    Private imageFileFilter = "Image Files|*.bmp;*.jpg;*.png|All Files (*.*)|*.*"''~v@@@R~
-    Private imageFileFilter As String = "Image Files|*.bmp;*.jpg;*.png;*.tiff|All Files (*.*)|*.*" ''~v@@@R~
+    Private imageFileFilter As String = "Image Files|*.bmp;*.jpg;*.jpeg;*.png;*.tif;*.tiff;*.icon;*.ico|All Files (*.*)|*.*" ''~v@@@R~''~va04R~
+    Private imageSaveFileFilter As String = "Bitmap|*.bmp|Jpeg|*.jpg|Png|*.png|Tiff|*.tif|Icon|*.ico|All Files|*.*"''~va04R~
     Private image As System.Drawing.Image
     Private bmpZoom As Bitmap
     Private bmpForRect As Bitmap                                       ''~v106I~
@@ -48,10 +55,8 @@ Public Class Form1                                                     ''~v@@@R~
     Private swInitialized As Boolean = False                             ''~v110I~
     '**************************************************************************************''~v@@@I~
     Public Sub New()       'from Main.vb                               ''~v110R~
-#If DEBUG Then                                                              ''~v110I~
-        setCulture()                                                   ''~v110I~
-#End If                                                                ''~v110I~
         setIsLangJP()                                                  ''~v110I~
+        setCulture()                                                   ''~v110M~
         InitializeComponent()                                          ''~v110I~
     End Sub                                                            ''~v110I~
     Private Sub Form1_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load ''~v@@@I~''~v110R~
@@ -179,7 +184,7 @@ Public Class Form1                                                     ''~v@@@R~
         Dim langTag As String = getSelectedLangTag()                   ''~v001I~
         Try                                                            ''~v@@@I~
             Dim xText As String = ""                                        ''~v@@@I~
-            Trace.W("Form1:extractText scaleNew=" & scaleNew)          ''~v108I~
+            Trace.W("Form1:extractText scaleNew=" & scaleNew & ",swRectBMP=" & swRectBMP)          ''~v108I~''~v113R~
             iOCR.setRect(swRectBMP, CType(PictureBox1.Image, Bitmap), scaleNew, clipRect) ''~v106R~
             Dim swOK = iOCR.extractText(imageFileName, orgBMP, langTag, xText)     ''~v@@@R~
             setText(swRectBMP, xText)                                             ''~v@@@I~''~v106R~
@@ -188,6 +193,11 @@ Public Class Form1                                                     ''~v@@@R~
                     '                   showStatus(Rstr.getStr("WARN_EXTRACTED_NULLSTR"))  ''~v106R~
                     showStatus(My.Resources.WARN_EXTRACTED_NULLSTR())               ''~v106I~
                 Else                                                     ''~v106I~
+                    If swRectBMP Then                                               ''~va01I~''~va02I~
+                        showStatus("Partially Extracted")                      ''~va01I~''~va02I~
+                    Else                                                       ''~va01I~''~va02I~
+                        showStatus("Extracted")                                ''~va01I~''~va02I~
+                    End If                                                     ''~va01I~''~va02I~
                     showWords()                                      ''~v@@@R~
                     swSaved = False                                          ''~v@@@I~
                 End If                                                   ''~v106I~
@@ -418,6 +428,7 @@ Public Class Form1                                                     ''~v@@@R~
         Dim oldbmp = PictureBox1.Image                                   ''~v@@@I~
         PictureBox1.Image = Pbmp                                       ''~v@@@I~
         swRectBMP = False 'PictureBox image is not rect drawn            ''~v106I~
+        Trace.W("Form1 SetPictureBoxImage swRectBMP=" & swRectBMP)     ''~v113R~
         '       If Not swWordBMP Then   'not zoom use wordBMP                       ''~v106I~''~v108R~
         If Not swSaveRectImage Then                                         ''~v108I~
             saveRectBMP(Pbmp)                                        ''~v106I~''~v108R~
@@ -435,15 +446,18 @@ Public Class Form1                                                     ''~v@@@R~
     End Sub                                                            ''~v@@@I~
     '*************************************************************     ''~v106I~
     Private Sub setPictureBoxImageRect(Pbmp As Bitmap, PrestoreOrg As Boolean)                 ''~v106I~''~v108R~
+        Trace.W("Form1 SetPictureBoxImageRect entry swRectBMP=" & swRectBMP) ''~v113I~
         swSaveRectImage = True                                           ''~v106I~
         If PrestoreOrg Then                                                 ''~v108I~
             drawZoom(Pbmp, scaleNew)  'set clone to PictureBox.Image    ''~v108I~
         Else                                                           ''~v108I~
             setPictureBoxImage(Pbmp)                                       ''~v106I~''~v108R~
+            swRectBMP = True 'PictureBox image is rect drawn           ''~va01I~
         End If                                                         ''~v108I~
         swSaveRectImage = False                                          ''~v106I~
-        swRectBMP = True 'PictureBox image is rect drawn               ''~v106I~
+        '       swRectBMP = True 'PictureBox image is rect drawn               ''~v106I~''~va01R~
         swWordBMP = False   'clip image is from orgBMP                   ''~v108I~
+        Trace.W("Form1 SetPictureBoxImageRect exit swRectBMP=" & swRectBMP) ''~v113R~
     End Sub                                                            ''~v106I~
     '*************************************************************
     Public Shared Sub showStatus(Pmsg As String)                       ''~v@@@I~
@@ -530,6 +544,7 @@ Public Class Form1                                                     ''~v@@@R~
     Private Sub PBmouseUp(e As MouseEventArgs)                         ''~v106R~
         Dim bmprect As Bitmap = Nothing 'output from mouseUp           ''~v109R~
         Dim rc As Boolean = iIC.mouseUp(e, bmprect, clipRect) 'get clipRect and clip drawn bmp''~v106R~
+        Trace.W("Form1 PBMouseUp swRectBMP=" & swRectBMP & ",rc=" & rc) ''~v113R~
         If rc Then  'rectangle drawn                                        ''~v106I~
             setPictureBoxImageRect(bmprect, False)                            ''~v106R~''~v108R~
         End If                                                         ''~v106I~
@@ -538,20 +553,21 @@ Public Class Form1                                                     ''~v@@@R~
     Private Sub PBmouseMove(e As MouseEventArgs)                       ''~v106R~
         Dim bmprect As Bitmap = Nothing 'output from mouseMove           ''~v106R~''~v109R~
         Dim rc As Boolean = iIC.mouseMove(e, bmprect, clipRect)        ''~v106R~
+        Trace.W("Form1 PBMouseMove swRectBMP=" & swRectBMP & ",rc=" & rc) ''~v113R~
         If rc Then  'rectangle drawn                                        ''~v106I~
             setPictureBoxImageRect(bmprect, False)                            ''~v106R~''~v108R~
         End If                                                         ''~v106I~
     End Sub                                                            ''~v106I~
     '*************************************************************     ''~v106I~
     Private Sub showPartialText(Ptext As String)                       ''~v106I~
-        Dim swNew AS Boolean                                           ''~v113I~
+        Dim swNew As Boolean                                           ''~v113I~
         If formClip Is Nothing OrElse formClip.IsDisposed Then         ''~v106I~
             formClip = New Form2(Me)                     ''~v106R~
         End If                                                         ''~v106I~
         formClip.setText(Ptext)                                        ''~v106I~
-        if Not swNew                                                   ''~v113I~
+        If Not swNew Then                                                   ''~v113I~
             Form1.showTop(formClip)                                    ''~v113I~
-        end if                                                         ''~v113I~
+        End If                                                         ''~v113I~
     End Sub                                                            ''~v106I~
     '*************************************************************     ''~v106I~
     Public Sub receivePartialText(Ptext As String)                   ''~v106I~
@@ -567,11 +583,12 @@ Public Class Form1                                                     ''~v@@@R~
         TextBox1.Text = txtnew                                           ''~v106I~
         TextBox1.SelectionStart = pos                                    ''~v106I~
         TextBox1.SelectionLength = txtadd.Length                         ''~v106I~
-        Form1.showTop(CType(Me,Form))                                  ''+v113I~
+        Form1.showTop(CType(Me, Form))                                  ''~v113I~
     End Sub                                                            ''~v106I~
     '*************************************************************     ''~v110I~
     Public Sub setCulture()                                            ''~v110I~
         Dim culture As CultureInfo                                     ''~v110I~
+#if DEBUG                                                              ''~v110I~
         Dim cfg As String = My.Settings.CFG_Culture 'for test culture    ''~v110I~
         If cfg.Length = 0 OrElse cfg.StartsWith(" ") Then                     ''~v110I~
             cfg = CultureInfo.CurrentCulture.Name                             ''~v110I~
@@ -581,8 +598,14 @@ Public Class Form1                                                     ''~v@@@R~
             culture = New CultureInfo("en-GB")                     ''~v110I~
 
         Else                                                           ''~v110I~
-            culture = New CultureInfo(cfg)                             ''~v110I~
+            culture = New CultureInfo(cfg)   'resource is prepared for native(Ja) and en-GB''~v110R~
         End If                                                         ''~v110I~
+#Else                                                                  ''~v110I~
+        if swLangJP                                                    ''+v110R~
+        	Exit Sub                                                   ''~v110I~
+        End If                                                         ''~v110I~
+        culture = New CultureInfo("en-GB")                             ''~v110I~
+#End If                                                                 ''~v110I~
         Thread.CurrentThread.CurrentCulture = culture                    ''~v110I~
         Thread.CurrentThread.CurrentUICulture = culture                ''~v110I~
     End Sub                                                            ''~v110I~
@@ -603,6 +626,10 @@ Public Class Form1                                                     ''~v@@@R~
         apply.Enabled = False                                            ''~v110I~
 #End If                                                                ''~v110M~
     End Sub                                                            ''~v110I~
+
+    Private Sub On_SaveImage_Click(sender As Object, e As EventArgs) Handles ToolStripButtonSaveBMP.Click
+        SaveImage()                                                    ''~va04R~
+    End Sub
     '*************************************************************     ''~v110I~
     '* DEBUG only                                                      ''~v110I~
     Public Sub cultureChanged()                                        ''~v110I~
@@ -626,7 +653,48 @@ Public Class Form1                                                     ''~v@@@R~
         End If                                                         ''~v110I~
     End Sub                                                            ''~v110I~
     '*************************************************************     ''~v113I~
-    Public shared sub showTop(Pform as Form)                           ''~v113I~
-    	Pform.BringToFront()     'ZorderTop                            ''~v113I~
+    Public Shared Sub showTop(Pform As Form)                           ''~v113I~
+        Pform.BringToFront()     'ZorderTop                            ''~v113I~
     End Sub                                                            ''~v113I~
+    '*************************************************************     ''~va04I~
+    Private Sub SaveImage()                                            ''~va04I~
+        Dim fnm As String = imageFileName                                ''~va04I~
+        If fnm Is Nothing OrElse fnm.Length = 0 Then                         ''~va04I~
+            Exit Sub                                                     ''~va04I~
+        End If                                                         ''~va04I~
+        Dim base, ext As String                                         ''~va04I~
+        getFileNameExt(fnm, base, ext)                                   ''~va04I~
+        Dim dlg As SaveFileDialog = SaveFileDialogImage                   ''~va04I~
+        dlg.Filter = imageSaveFileFilter                               ''~va04R~
+        dlg.FileName = base & "-clip"                              ''~va04I~
+        '       dlg.AddExtension = True   'add extension if missing            ''~va04R~
+        dlg.DefaultExt = ext                                           ''~va04I~
+        dlg.FilterIndex = imageSaveFilterIndex                         ''~va04R~
+        If dlg.ShowDialog() = DialogResult.OK Then                     ''~va04I~
+            fnm = dlg.FileName                                         ''~va04I~
+            imageSaveFilterIndex = dlg.FilterIndex                     ''~va04R~
+            '           insertMRUList(1, fnm)      '1:imagefile                    ''~va04I~
+            getFileNameExt(fnm, base, ext)                               ''~va04I~
+            SaveImage(base, ext)                                       ''~va04R~
+        End If                                                         ''~va04I~
+    End Sub                                                            ''~va04I~
+    Private Sub SaveImage(Pfnm As String, Pfmt As String)               ''~va04R~
+        iOCR.saveImage(Pfnm, Pfmt, swRectBMP, orgBMP, scaleNew, clipRect) ''~va04R~
+    End Sub                                                            ''~va04I~
+    Private Function getFileNameExt(Pfnm As String, ByRef Pppath As String, ByRef Ppext As String) As Boolean ''~va04I~
+        If Pfnm Is Nothing OrElse Pfnm.Length = 0 Then                        ''~va04I~
+            Return False                                               ''~va04I~
+        End If                                                         ''~va04I~
+        Dim ext As String = System.IO.Path.GetExtension(Pfnm)          ''~va04I~
+        Dim other As String = Pfnm                                     ''~va04I~
+        If ext Is Nothing Or ext.Length = 0 Then                              ''~va04I~
+            ext = ""                                                     ''~va04I~
+        Else                                                           ''~va04I~
+            other = Pfnm.Substring(0, Pfnm.Length - ext.Length)             ''~va04I~
+            ext = ext.Substring(1, ext.Length - 1)                            ''~va04I~
+        End If                                                         ''~va04I~
+        Pppath = other                                                   ''~va04I~
+        Ppext = ext                                                      ''~va04I~
+        Return True                                                    ''~va04I~
+    End Function                                                            ''~va04I~
 End Class

@@ -1,3 +1,12 @@
+V1.03 : 2017/12/25  gitup   *******************************************************
+'va04 2017/12/25 save cut image to file
+           class2.vb form1
+'va03 2017/12/25 set default extension to saveas dialog
+           Form1,vb
+'va02 2017/12/25 status msg need to be cleared 
+           Form1,vb
+'va01 2017/12/25 mousedow did not cleared swRectBMP(do partial extracting)
+           Form1,vb
 V1.02 : 2017/12/24  gitup   *******************************************************
 'v113 2017/12/22 put Zorder Top
            Form1,vb form2.vb

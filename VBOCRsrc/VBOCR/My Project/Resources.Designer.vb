@@ -149,6 +149,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        '''</summary>
+        Friend ReadOnly Property Icon_sampleVBOCR128() As System.Drawing.Icon
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Icon_sampleVBOCR128", resourceCulture)
+                Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  読み取り結果は空でした に類似しているローカライズされた文字列を検索します。
         '''</summary>
         Friend ReadOnly Property WARN_EXTRACTED_NULLSTR() As String

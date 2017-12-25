@@ -72,6 +72,9 @@
     <OutputPath>bin\Setup\</OutputPath>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icons\Icon-sampleVBOCR128.ico</ApplicationIcon>
+  </PropertyGroup>
   <!--
   <PropertyGroup>
     <ManifestCertificateThumbprint>FD44E3F4ECC23FCAEE37E3B8B597E4497E276430</ManifestCertificateThumbprint>
@@ -207,16 +210,16 @@
     <None Include="helps\help_Form1E.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\help_Form1.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\help_Form1E.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="helps\help_Form2.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="helps\help_Form2E.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icons\Icon-sampleVBOCR128.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <!--
   <ItemGroup>

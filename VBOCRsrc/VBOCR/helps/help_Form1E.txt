@@ -8,6 +8,7 @@ vertical writing may be recognized horizontally.
 You can specify a portion to be extracted by mouse dragging.
 Extracted text partially is shown on another form.
 Use OK button or Copy & Paste to take in the text.
+ImageSave Button enables to save the portion to image file.
 
 "Extract":
   Extract text from image document.
@@ -22,4 +23,4 @@ Use OK button or Copy & Paste to take in the text.
     Another way from "Settings", you can install the Language Pack,
     "Application","Optional Feature", ... "OCR",Download & Install. 
 
-(Form1)                          2017/12/21
+(Form1)                          2017/12/25

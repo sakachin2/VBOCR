@@ -1,6 +1,7 @@
-﻿'CID:''+v110R~:#72                             update#=  151;         ''+v110R~
+﻿'CID:''+va04R~:#72                             update#=  163;         ''~va04R~
 '************************************************************************************''~v106I~
-'v110 2017/12/22 Test change of resource culture                       ''+v110I~
+'va04 2017/12/25 save cut image to file                                ''~va04I~
+'v110 2017/12/22 Test change of resource culture                       ''~v110I~
 'v109 2017/12/21 save setting of Selected Language                     ''~v109I~
 'v106 2017/12/20 partially extract from image(box by mouse dragging)   ''~v106I~
 '************************************************************************************''~v106I~
@@ -73,11 +74,11 @@ Public Class Cocr                                                      ''~v@@@R~
         For Each item As Language In langlist                          ''~v@@@I~
             Dim row As DataRow = tb.NewRow()                           ''~v@@@I~
             row(LANG_TAG) = item.LanguageTag                           ''~v@@@I~
-            If Form1.swLangJP Then                                            ''+v110I~
+            If Form1.swLangJP Then                                            ''~v110I~
                 row(LANG_NAME) = item.DisplayName                          ''~v@@@I~
-            Else                                                         ''+v110I~
-                row(LANG_NAME) = item.NativeName                           ''+v110I~
-            End If                                                       ''+v110I~
+            Else                                                         ''~v110I~
+                row(LANG_NAME) = item.NativeName                           ''~v110I~
+            End If                                                       ''~v110I~
             tb.Rows.Add(row)                                           ''~v@@@I~
         Next                                                           ''~v@@@I~
         tb.AcceptChanges()                                             ''~v@@@I~
@@ -107,19 +108,43 @@ Public Class Cocr                                                      ''~v@@@R~
         ww = CType(clipRect.Width / scaleNew, Integer)                       ''~v106I~''~v109R~
         hh = CType(clipRect.Height / scaleNew, Integer)                      ''~v106I~''~v109R~
         Dim tgtRect As Rectangle = New Rectangle(xx, yy, ww, hh)       ''~v106I~
+#If False Then                                                              ''~va04I~
         Dim bmp As Bitmap = New Bitmap(PorgBMP.Width, PorgBMP.Height)    ''~v106I~
         Dim g = Graphics.FromImage(bmp)                                ''~v106I~
         Dim unit As GraphicsUnit = GraphicsUnit.Pixel                    ''~v106R~
         g.DrawImage(PorgBMP, tgtRect, xx, yy, ww, hh, unit)              ''~v106R~
         g.Dispose()                                                    ''~v106I~
+#Else                                                                  ''~va04I~
+        Dim bmp As Bitmap = cutImage(PorgBMP, tgtRect)                    ''~va04I~
+#End If                                                                ''~va04I~
         Trace.W("cutBMPRect org W=" & PorgBMP.Width & ",H=" & PorgBMP.Height) ''~v106I~
         Trace.W("cutBMPRect clipRect X=" & clipRect.X & ",Y=" & clipRect.Y & ",W=" & clipRect.Width & ",H=" & clipRect.Height) ''~v106I~''~v109R~
         Trace.W("cutBMPRect scale=" & scaleNew)                        ''~v106I~
         Trace.W("cutBMPRect xx=" & xx & ",yy=" & yy & ",ww=" & ww & ",hh=" & hh) ''~v106I~
         Trace.W("cutBMPRect clip W=" & bmp.Width & ",H=" & bmp.Height) ''~v106I~
-        '       bmp.Save("W:\cutbmprect.bmp", ImageFormat.BMP) '@@@@test        ''~v106R~''~v109R~
+        '       saveImage(bmp, "W:\wd\ocrcut", ImageFormat.Png)                ''~va04R~
         Return bmp                                                     ''~v106I~
     End Function                                                           ''~v106I~
+    '**************************************************                ''~va04I~
+    Public Sub saveImage(Pbasename As String, Pextname As String, PswRectBMP As Boolean, PorgBMP As Bitmap, Pscale As Double, Prect As Rectangle) ''~va04R~
+        Dim bmp As Bitmap                                              ''~va04I~
+    	if PswRectBMP 'clipped                                         ''~va04I~
+            Dim xx, yy, ww, hh As Integer                              ''~va04R~
+            xx = CType(Prect.X / Pscale, Integer) 'dest and src position''~va04R~
+            yy = CType(Prect.Y / Pscale, Integer)                      ''~va04R~
+            ww = CType(Prect.Width / Pscale, Integer)                  ''~va04R~
+            hh = CType(Prect.Height / Pscale, Integer)                 ''~va04R~
+            Dim tgtRect As Rectangle = New Rectangle(xx, yy, ww, hh)   ''~va04R~
+            bmp = cutImage(PorgBMP, tgtRect)                           ''~va04R~
+        else                                                           ''~va04I~
+        	bmp=PorgBMP                                                ''~va04I~
+        end if                                                         ''~va04I~
+        Dim fmt As ImageFormat = str2Fmt(Pextname)                     ''~va04I~
+        saveImage(bmp, Pbasename, fmt)                                 ''~va04R~
+        if PswRectBMP                                                  ''~va04I~
+        	bmp.Dispose()                                              ''~va04I~
+        end if                                                         ''~va04I~
+    End Sub                                                       ''~va04I~
 #If False Then                                                              ''~v@@@I~
     '*************************************************************     ''~v@@@I~
     Public Function extractText(Pfnm As String, PfileBMP As Bitmap, Ptag As String, ByRef Pptext As String) As Boolean ''~v@@@R~
@@ -180,7 +205,7 @@ Public Class Cocr                                                      ''~v@@@R~
             Dim stream = Await ConvertToRandomAccessStream(mem)        ''~v@@@M~
             softbmp = Await LoadImage(stream)                          ''~v@@@M~
         Catch ex As Exception                                          ''~v@@@M~
-            showStatus(CNM & "LoadImage file exception:" & Pfnm & ":" & ex.Message)''~v@@@R~
+            showStatus(CNM & "LoadImage file exception:" & Pfnm & ":" & ex.Message) ''~v@@@R~
         End Try                                                        ''~v@@@M~
         Return softbmp                                                 ''~v@@@M~
     End Function                                                       ''~v@@@M~
@@ -240,7 +265,7 @@ Public Class Cocr                                                      ''~v@@@R~
         Try                                                            ''~v@@@I~
             result = Await engine.RecognizeAsync(Pbmp)                 ''~v@@@I~
         Catch ex As Exception                                          ''~v@@@I~
-            showStatus(CNM & "Extract failed:" & imageFilename & ":" & ex.Message)''~v@@@R~
+            showStatus(CNM & "Extract failed:" & imageFilename & ":" & ex.Message) ''~v@@@R~
         End Try                                                        ''~v@@@I~
         Return result                                                  ''~v@@@I~
     End Function                                                       ''~v@@@I~
@@ -290,6 +315,58 @@ Public Class Cocr                                                      ''~v@@@R~
     Private Sub showStatus(Pmsg As String)                                 ''~v@@@I~
         Form1.showStatus(Pmsg)                                         ''~v@@@I~
     End Sub                                                            ''~v@@@I~
+    '*************************************************************     ''~v110I~
+    Public Sub saveCutImage(Pbmp As Bitmap, Prect As Rectangle, Pfnm As String, Pfmt As ImageFormat)''~va04R~
+        Dim cutbmp As Bitmap = cutImage(Pbmp, Prect)                   ''~va04R~
+        saveImage(cutbmp, Pfnm, Pfmt)
+    End Sub                                                            ''~va04R~
+    '*************************************************************     ''~va04I~
+    Public Sub saveImage(Pbmp As Bitmap, Pfnm As String, Pfmt As ImageFormat) ''~va04I~
+        Dim ext As String = getImageFormat(Pfmt)                       ''~va04I~
+        Pbmp.Save(Pfnm & "." & ext, Pfmt)                              ''~va04I~
+    End Sub                                                            ''~va04I~
+    '*************************************************************     ''~va04R~
+    Public Function cutImage(Pbmp As Bitmap, Prect As Rectangle) As Bitmap ''~va04R~
+        Dim bmp As Bitmap = Pbmp.Clone(Prect, Pbmp.PixelFormat)        ''~va04R~
+        Return bmp                                                     ''~va04R~
+    End Function                                                       ''~va04R~
+    '*************************************************************     ''~va04R~
+    Public Function getImageFormat(Pfmt As ImageFormat) As String      ''~va04R~
+        Dim fmt As String = Pfmt.ToString()                            ''~va04R~
+        Return fmt                                                     ''~va04R~
+    End Function                                                       ''~va04R~
+    '*************************************************************     ''~va04I~
+    Public Function str2Fmt(Pstrfmt As String) As ImageFormat          ''~va04I~
+        Dim fmt As ImageFormat                                         ''~va04I~
+        If String.Compare(Pstrfmt, "bmp", True) = 0 Then   'true:ignotre case   ''~va04I~
+            Return ImageFormat.Bmp                                     ''~va04I~
+        End If                                                         ''~va04I~
+        If String.Compare(Pstrfmt, "gif", True) = 0 Then   'true:ignotre case''+va04R~
+            Return ImageFormat.Gif                                     ''~va04I~
+        End If                                                         ''~va04I~
+        If String.Compare(Pstrfmt, "jpg", True) = 0 Then   'true:ignotre case   ''~va04I~
+            Return ImageFormat.Jpeg                                   ''~va04I~
+        End If                                                         ''~va04I~
+        If String.Compare(Pstrfmt, "jpeg", True) = 0 Then   'true:ignotre case  ''~va04I~
+            Return ImageFormat.Jpeg                                   ''~va04I~
+        End If                                                         ''~va04I~
+        If String.Compare(Pstrfmt, "png", True) = 0 Then   'true:ignotre case   ''~va04I~
+            Return ImageFormat.Png                                     ''~va04I~
+        End If                                                         ''~va04I~
+        If String.Compare(Pstrfmt, "tiff", True) = 0 Then   'true:ignotre case  ''~va04I~
+            Return ImageFormat.Tiff                                    ''~va04I~
+        End If                                                         ''~va04I~
+        If String.Compare(Pstrfmt, "tif", True) = 0 Then   'true:ignotre case   ''~va04I~
+            Return ImageFormat.Tiff                                    ''~va04I~
+        End If                                                         ''~va04I~
+        If String.Compare(Pstrfmt, "icon", True) = 0 Then   'true:ignotre case  ''~va04I~
+            Return ImageFormat.Icon                                    ''~va04I~
+        End If                                                         ''~va04I~
+        If String.Compare(Pstrfmt, "ico", True) = 0 Then   'true:ignotre case   ''~va04I~
+            Return ImageFormat.Icon                                    ''~va04I~
+        End If                                                         ''~va04I~
+        Return ImageFormat.Bmp                                         ''~va04I~
+    End Function                                                       ''~va04I~
 End Class                                                              ''~v@@@I~
 '*************************************************************         ''~v@@@I~
 ' Windows manual                                                       ''~v@@@I~

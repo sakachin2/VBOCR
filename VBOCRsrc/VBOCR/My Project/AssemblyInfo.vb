@@ -8,7 +8,7 @@ Imports System.Runtime.InteropServices
 
 ' アセンブリ属性の値を確認します
 
-<Assembly: AssemblyTitle("testvbwpfocr")>
+<Assembly: AssemblyTitle("VBOCR")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("sakachin2")>
 <Assembly: AssemblyProduct("sakachin2VBOCR")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' 既定値にすることができます:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.2.0")>
-<Assembly: AssemblyFileVersion("1.0.2.0")>
+<Assembly: AssemblyVersion("1.0.3.0")>
+<Assembly: AssemblyFileVersion("1.0.3.0")>

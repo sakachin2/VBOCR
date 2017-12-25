@@ -1,5 +1,9 @@
 (UTF8 encoding)
 *********************************************************************************************
+V1.03 : 2017/12/25 
+
+Supports output the potion of the image to file.
+
 V1.02 : 2017/12/21 
 
 Supports partial extracting in the box by mouse dragging.
