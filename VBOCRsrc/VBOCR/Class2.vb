@@ -1,5 +1,6 @@
-﻿'CID:''+va04R~:#72                             update#=  163;         ''~va04R~
+﻿'CID:''+va05R~:#72                             update#=  167;         ''~va05R~
 '************************************************************************************''~v106I~
+'va05 2017/12/26 ext name Jpeg-->jpg,icon-->ico,tiff->tif              ''~va05I~
 'va04 2017/12/25 save cut image to file                                ''~va04I~
 'v110 2017/12/22 Test change of resource culture                       ''~v110I~
 'v109 2017/12/21 save setting of Selected Language                     ''~v109I~
@@ -128,7 +129,7 @@ Public Class Cocr                                                      ''~v@@@R~
     '**************************************************                ''~va04I~
     Public Sub saveImage(Pbasename As String, Pextname As String, PswRectBMP As Boolean, PorgBMP As Bitmap, Pscale As Double, Prect As Rectangle) ''~va04R~
         Dim bmp As Bitmap                                              ''~va04I~
-    	if PswRectBMP 'clipped                                         ''~va04I~
+        If PswRectBMP Then 'clipped                                         ''~va04I~
             Dim xx, yy, ww, hh As Integer                              ''~va04R~
             xx = CType(Prect.X / Pscale, Integer) 'dest and src position''~va04R~
             yy = CType(Prect.Y / Pscale, Integer)                      ''~va04R~
@@ -136,14 +137,14 @@ Public Class Cocr                                                      ''~v@@@R~
             hh = CType(Prect.Height / Pscale, Integer)                 ''~va04R~
             Dim tgtRect As Rectangle = New Rectangle(xx, yy, ww, hh)   ''~va04R~
             bmp = cutImage(PorgBMP, tgtRect)                           ''~va04R~
-        else                                                           ''~va04I~
-        	bmp=PorgBMP                                                ''~va04I~
-        end if                                                         ''~va04I~
+        Else                                                           ''~va04I~
+            bmp = PorgBMP                                                ''~va04I~
+        End If                                                         ''~va04I~
         Dim fmt As ImageFormat = str2Fmt(Pextname)                     ''~va04I~
         saveImage(bmp, Pbasename, fmt)                                 ''~va04R~
-        if PswRectBMP                                                  ''~va04I~
-        	bmp.Dispose()                                              ''~va04I~
-        end if                                                         ''~va04I~
+        If PswRectBMP Then                                                  ''~va04I~
+            bmp.Dispose()                                              ''~va04I~
+        End If                                                         ''~va04I~
     End Sub                                                       ''~va04I~
 #If False Then                                                              ''~v@@@I~
     '*************************************************************     ''~v@@@I~
@@ -316,7 +317,7 @@ Public Class Cocr                                                      ''~v@@@R~
         Form1.showStatus(Pmsg)                                         ''~v@@@I~
     End Sub                                                            ''~v@@@I~
     '*************************************************************     ''~v110I~
-    Public Sub saveCutImage(Pbmp As Bitmap, Prect As Rectangle, Pfnm As String, Pfmt As ImageFormat)''~va04R~
+    Public Sub saveCutImage(Pbmp As Bitmap, Prect As Rectangle, Pfnm As String, Pfmt As ImageFormat) ''~va04R~
         Dim cutbmp As Bitmap = cutImage(Pbmp, Prect)                   ''~va04R~
         saveImage(cutbmp, Pfnm, Pfmt)
     End Sub                                                            ''~va04R~
@@ -332,16 +333,33 @@ Public Class Cocr                                                      ''~v@@@R~
     End Function                                                       ''~va04R~
     '*************************************************************     ''~va04R~
     Public Function getImageFormat(Pfmt As ImageFormat) As String      ''~va04R~
+        If Pfmt.equals(ImageFormat.Jpeg) Then                          ''+va05R~
+            Return "jpg"                                               ''~va05I~
+        End If                                                         ''~va05I~
+        If Pfmt.equals(ImageFormat.Icon) Then                          ''+va05R~
+            Return "ico"                                               ''~va05I~
+        End If                                                         ''~va05I~
+        If Pfmt.equals(ImageFormat.Tiff) Then                          ''+va05R~
+            Return "tif"                                               ''~va05I~
+        End If                                                         ''~va05I~
+        If Pfmt.equals(ImageFormat.Png) Then                           ''+va05R~
+            Return "png"       '*lowercase                             ''~va05I~
+        End If                                                         ''~va05I~
+        If Pfmt.equals(ImageFormat.Bmp) Then                           ''+va05R~
+            Return "bmp"       '*lowercase                             ''~va05I~
+        End If                                                         ''~va05I~
+        If Pfmt.equals(ImageFormat.Gif) Then                           ''+va05R~
+            Return "gif"       '*lowercase                             ''~va05I~
+        End If                                                         ''~va05I~
         Dim fmt As String = Pfmt.ToString()                            ''~va04R~
         Return fmt                                                     ''~va04R~
     End Function                                                       ''~va04R~
     '*************************************************************     ''~va04I~
     Public Function str2Fmt(Pstrfmt As String) As ImageFormat          ''~va04I~
-        Dim fmt As ImageFormat                                         ''~va04I~
         If String.Compare(Pstrfmt, "bmp", True) = 0 Then   'true:ignotre case   ''~va04I~
             Return ImageFormat.Bmp                                     ''~va04I~
         End If                                                         ''~va04I~
-        If String.Compare(Pstrfmt, "gif", True) = 0 Then   'true:ignotre case''+va04R~
+        If String.Compare(Pstrfmt, "gif", True) = 0 Then   'true:ignotre case''~va04R~
             Return ImageFormat.Gif                                     ''~va04I~
         End If                                                         ''~va04I~
         If String.Compare(Pstrfmt, "jpg", True) = 0 Then   'true:ignotre case   ''~va04I~

@@ -1,3 +1,10 @@
+V1.04 : 2017/12/85  gitup   *******************************************************
+'va07 2017/12/28 set both picturebox and textbox resizable
+           form1.vb
+'va06 2017/12/26 ajust filter index by original extension
+           form1.vb
+'va05 2017/12/26 ext name Jpeg-->jpg,icon-->ico,tiff->tif
+           class2.vb
 V1.03 : 2017/12/25  gitup   *******************************************************
 'va04 2017/12/25 save cut image to file
            class2.vb form1

@@ -1,5 +1,7 @@
-﻿'CID:''+v110R~:#72                             update#=  249;         ''~v110R~
+﻿'CID:''+va07R~:#72                             update#=  259;         ''~va06R~''~va07R~
 '************************************************************************************''~v006I~''~v001I~
+'va07 2017/12/28 set both picturebox and textbox resizable             ''~va07I~
+'va06 2017/12/26 ajust filter index by original extension              ''~va06I~
 'va04 2017/12/25 save cut image to file                                ''~va04I~
 'va03 2017/12/25 set default extension to saveas dialog                ''~va03I~
 'va02 2017/12/25 status msg need to be cleared                         ''~va02I~
@@ -19,18 +21,19 @@ Imports System.Configuration
 
 Public Class Form1                                                     ''~v@@@R~
 
-    Const FILTER_DEFAULT_IMAGE = "bmp"
+    Const VERSION="v1.0.4"                                             ''+va07R~
+    Const FILTER_DEFAULT_IMAGE = "bmp"                                 ''+va07I~
     Const SCALE_INITIAL = 1.0                                            ''~v@@@I~
     Const SCALE_RATE = 0.1                                               ''~v@@@I~
     Const SCALE_LIMIT_LOW = 0.01                                       ''~v@@@I~
     Const LANG_TAG_JP = "ja"                                             ''~v@@@I~
-    Private imageSaveFilterIndex As Integer = 0                        ''~va04I~
+    Private imageSaveFilterIndex As Integer = 1 '*default 1                        ''~va04I~''~va06R~
     Private imageSaveFilename As String = ""                             ''~va04I~
     Private imageFileFilterIndex As Integer = 0
     Private imageFileName As String = ""
     '    Private imageFileFilter = "Image Files|*.bmp;*.jpg;*.png|All Files (*.*)|*.*"''~v@@@R~
     Private imageFileFilter As String = "Image Files|*.bmp;*.jpg;*.jpeg;*.png;*.tif;*.tiff;*.icon;*.ico|All Files (*.*)|*.*" ''~v@@@R~''~va04R~
-    Private imageSaveFileFilter As String = "Bitmap|*.bmp|Jpeg|*.jpg|Png|*.png|Tiff|*.tif|Icon|*.ico|All Files|*.*"''~va04R~
+    Private imageSaveFileFilter As String = "Bitmap|*.bmp|Jpeg|*.jpg|Png|*.png|Tiff|*.tif|Icon|*.ico|All Files|*.*" ''~va04R~
     Private image As System.Drawing.Image
     Private bmpZoom As Bitmap
     Private bmpForRect As Bitmap                                       ''~v106I~
@@ -72,6 +75,7 @@ Public Class Form1                                                     ''~v@@@R~
         idxLang = My.Settings.CFG_LangIndex                            ''~v109R~
         setupComboBoxLang()                                            ''~v@@@I~
         swInitialized = True                                             ''~v110I~
+        Me.Text=Me.Text & " " & VERSION                                ''+va07I~
     End Sub                                                            ''~v@@@I~
     '**************************************************************************************''~v@@@I~
     Private Sub Form1_Closing(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing ''~v@@@I~
@@ -84,15 +88,15 @@ Public Class Form1                                                     ''~v@@@R~
     '       My.Settings.CFG_LangIndex = idxLang                            ''~v109R~''~v110R~
     '   End Sub                                                            ''~v109I~''~v110R~
     '**************************************************                ''~v106I~
-    Private Sub Pictureox1_MouseDown(sender As System.Object, e As MouseEventArgs) Handles PictureBox1.MouseDown ''~v106R~
+    Private Sub PicturBox1_MouseDown(sender As System.Object, e As MouseEventArgs) Handles PictureBox1.MouseDown ''~v106R~''~va07R~
         PBmouseDown(e)                                                 ''~v106R~
     End Sub                                                            ''~v106I~
     '**************************************************                ''~v106I~
-    Private Sub Pictureox1_MouseUp(sender As System.Object, e As MouseEventArgs) Handles PictureBox1.MouseUp ''~v106R~
+    Private Sub PicturBox1_MouseUp(sender As System.Object, e As MouseEventArgs) Handles PictureBox1.MouseUp ''~v106R~''~va07R~
         PBmouseUp(e)                                                   ''~v106R~
     End Sub                                                            ''~v106I~
     '**************************************************                ''~v106I~
-    Private Sub Pictureox1_MouseMove(sender As System.Object, e As MouseEventArgs) Handles PictureBox1.MouseMove ''~v106R~
+    Private Sub PicturBox1_MouseMove(sender As System.Object, e As MouseEventArgs) Handles PictureBox1.MouseMove ''~v106R~''~va07R~
         PBmouseMove(e)                                                 ''~v106R~
     End Sub                                                            ''~v106I~
     '**************************************************
@@ -376,8 +380,10 @@ Public Class Form1                                                     ''~v@@@R~
         '       Dim hhPanel As Integer = PanelPictureBox.Height - scrollbarH              ''~v@@@I~''~v001R~
         '       Dim wwPanel As Integer = PanelPictureBox.Width - scrollbarW               ''~v@@@I~''~v001R~
         Dim hhNew, wwNew, hhOld, wwOld As Double                       ''~v001I~
-        Dim hhPanel As Double = PanelPictureBox.Height - scrollbarH   ''~v001I~
-        Dim wwPanel As Double = PanelPictureBox.Width - scrollbarW    ''~v001I~
+        '*      Dim hhPanel As Double = PanelPictureBox.Height - scrollbarH   ''~v001I~''~va07R~
+        '*      Dim wwPanel As Double = PanelPictureBox.Width - scrollbarW    ''~v001I~''~va07R~
+        Dim hhPanel As Double = SplitContainer1.Panel1.Height - scrollbarH ''~va07I~
+        Dim wwPanel As Double = SplitContainer1.Panel1.Width - scrollbarW ''~va07R~
         Dim scaleNext As Double = PscaleNext                             ''~v@@@I~
         '********                                                      ''~v@@@I~
         hhNew = orgBMP.Height * PscaleNext                             ''~v@@@R~
@@ -404,8 +410,10 @@ Public Class Form1                                                     ''~v@@@R~
         Dim hhOld, wwOld As Double                                     ''~v001I~
         '       Dim hhPanel As Double = PanelPictureBox.Height - scrollbarH    ''~v001R~
         '       Dim wwPanel As Double = PanelPictureBox.Width - scrollbarW     ''~v001R~
-        Dim hhPanel As Double = PanelPictureBox.Height - 1             ''~v001I~
-        Dim wwPanel As Double = PanelPictureBox.Width - 1              ''~v001I~
+        '*      Dim hhPanel As Double = PanelPictureBox.Height - 1             ''~v001I~''~va07R~
+        '*      Dim wwPanel As Double = PanelPictureBox.Width - 1              ''~v001I~''~va07R~
+        Dim hhPanel As Double = SplitContainer1.Panel1.Height - 1      ''~va07R~
+        Dim wwPanel As Double = SplitContainer1.Panel1.Width - 1       ''~va07R~
         Dim scaleNext As Double = PscaleOld                            ''~v@@@I~
         Dim rateH, rateW As Double                                      ''~v@@@I~
         '********                                                      ''~v@@@I~
@@ -601,7 +609,7 @@ Public Class Form1                                                     ''~v@@@R~
             culture = New CultureInfo(cfg)   'resource is prepared for native(Ja) and en-GB''~v110R~
         End If                                                         ''~v110I~
 #Else                                                                  ''~v110I~
-        if swLangJP                                                    ''+v110R~
+        if swLangJP                                                    ''~v110R~
         	Exit Sub                                                   ''~v110I~
         End If                                                         ''~v110I~
         culture = New CultureInfo("en-GB")                             ''~v110I~
@@ -662,13 +670,14 @@ Public Class Form1                                                     ''~v@@@R~
         If fnm Is Nothing OrElse fnm.Length = 0 Then                         ''~va04I~
             Exit Sub                                                     ''~va04I~
         End If                                                         ''~va04I~
-        Dim base, ext As String                                         ''~va04I~
+        Dim base = Nothing, ext As String = Nothing                                        ''~va04I~
         getFileNameExt(fnm, base, ext)                                   ''~va04I~
         Dim dlg As SaveFileDialog = SaveFileDialogImage                   ''~va04I~
         dlg.Filter = imageSaveFileFilter                               ''~va04R~
         dlg.FileName = base & "-clip"                              ''~va04I~
         '       dlg.AddExtension = True   'add extension if missing            ''~va04R~
         dlg.DefaultExt = ext                                           ''~va04I~
+        imageSaveFilterIndex = getSaveFilterIndex(imageSaveFilterIndex, imageSaveFileFilter, ext) ''~va06I~
         dlg.FilterIndex = imageSaveFilterIndex                         ''~va04R~
         If dlg.ShowDialog() = DialogResult.OK Then                     ''~va04I~
             fnm = dlg.FileName                                         ''~va04I~
@@ -697,4 +706,21 @@ Public Class Form1                                                     ''~v@@@R~
         Ppext = ext                                                      ''~va04I~
         Return True                                                    ''~va04I~
     End Function                                                            ''~va04I~
+    Private Function getSaveFilterIndex(Poldidx as Integer,PstrFilter as String,Pext as String) as Integer''~va06I~
+    '* Bitmap|*.bmp|Jpeg|*.jpg|Png|*.png|Tiff|*.tif|Icon|*.ico|All Files|*.*"''~va06I~
+    	Dim idx as Integer=Poldidx                                     ''~va06I~
+        Dim fmt As Imaging.ImageFormat = iOCR.str2Fmt(Pext)                      ''~va06I~
+        Dim ext As String = iOCR.getImageFormat(fmt)                         ''~va06I~
+        Dim pos as Integer=PstrFilter.indexOf(ext)                     ''~va06I~
+        if pos>0                                                       ''~va06I~
+        	Dim idx2 as Integer=0                                      ''~va06I~
+            For ii As Integer = 0 To pos                                 ''~va06I~
+                If PstrFilter.Chars(ii) = "|"c Then                           ''~va06I~
+                    idx2 += 1                                            ''~va06I~
+                End If                                                 ''~va06I~
+            Next                                                       ''~va06I~
+            idx =CType((idx2+1)/2,Integer)                              ''~va06I~
+        end if                                                         ''~va06I~
+        return idx                                                     ''~va06I~
+    End Function                                                       ''~va06I~
 End Class

@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  codepage,65001:utf8, 932:shift_jis, 28591:iso8859-1; 1252:ansi latin1   LCID 1041:ja, 1033:en-us            -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="36A549AE-191E-47A1-AC5D-047B16D2965F" Name="sampleVBOCR" Language="1033" Version="1.0.3" Manufacturer="sakachin2" UpgradeCode="5DFB9A2C-9768-42E2-A3FF-512821010F62">
-        <Package Description="Extract text in image file" Comments="OCR tool sampleVBOCR installer" InstallerVersion="200" Compressed="yes" />
+<!-- codepage,65001:utf8, 932:shift_jis, 28591:iso8859-1; 1252:ansi latin1   LCID 1041:ja, 1033:en-us -->
+<!-- major upgrade :change ProductCode(id=*),ProductVesion,PackageCode(bypass Id) -->
+<!-- Upgrade,UpgradeVersion is effenctive ony for Major upgrade; prev version will be uninstalled by major upgrade-->
+<!--  When versionup  change version = upgradeversion max of PREV = min of NEWER --> 
+    <Product Id="*" Name="sampleVBOCR" Language="1033" Version="1.0.4" Manufacturer="sakachin2"
+		 UpgradeCode="5DFB9A2C-9768-42E2-A3FF-512821010F62">
+        	<!-- set minimum=current version(include=no) : newer than current version will be reject(OnlyDetect=Yes) -->
+        	<!-- set maximum=current version(include=no) : older than current version will be removed(OnlyDetect=no) -->
+        <Package Description="Extract text in image file" Comments="OCR tool sampleVBOCR installer"
+			Id="*"
+			InstallerVersion="200" Compressed="yes"
+		/>
+<!--       cause duplicate err of removeexistingproduct
+        <MajorUpgrade 
+		    Schedule="afterInstallInitialize"
+		    AllowDowngrades="no" DowngradeErrorMessage="Error:Version downgrading"
+		/>
+-->
+        <Upgrade Id="5DFB9A2C-9768-42E2-A3FF-512821010F62">
+            <UpgradeVersion OnlyDetect="yes" Property="NEWERFOUND"
+				 Minimum="1.0.4" IncludeMinimum="no" />
+        	<UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND"
+            	Minimum="1.0.0" IncludeMinimum="yes"
+            	Maximum="1.0.4" IncludeMaximum="no"
+            />
+        </Upgrade>
         <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="ProgramFilesFolder" Name="PFiles">
@@ -46,7 +69,24 @@
             <ComponentRef Id="ApplicationShortcut" />
             <ComponentRef Id="ApplicationShortcutDesktop" />
         </Feature>
-        <UI />
+        <UI>
+          <Dialog Id="NewerFoundDlg" Width="270" Height="105"
+                  Title="[ProductName] Setup" NoMinimize="yes">
+            <Control Id="MessageText" Type="Text"
+                     X="48" Y="15" Width="205" Height="60" TabSkip="no"
+                     Text="[ProductName]: Newer than this version([ProductVersion])  is already installed." />
+            <Control Id="Y" Type="PushButton"
+                     X="200" Y="80" Width="56" Height="17" TabSkip="yes"
+                     Text="!(loc.WixUIOK)">
+              <Publish Event="EndDialog" Value="Return">1</Publish>
+            </Control>
+
+            <Control Id="NewerFoundDlgIcon"
+                     Type="Icon" X="15" Y="15" Width="24" Height="24"
+                     ToolTip="!(loc.ErrorDlgErrorIconTooltip)" FixedSize="yes" IconSize="32"
+                     Text="!(loc.ErrorDlgErrorIcon)" />
+          </Dialog>
+        </UI>
         <UIRef Id="WixUI_InstallDir" />
         <!--  value: id ofDirectory Entry to be installer(Line.9)  -->
         <Property Id="WIXUI_INSTALLDIR" Value="VBOCR" />
@@ -54,5 +94,16 @@
         <WixVariable Id="WixUILicenseRtf" Value="license-mit.rtf" />
         <Property Id="ARPPRODUCTICON" Value="ICON.EXE" />
         <Icon Id="ICON.EXE" SourceFile="..\VBOCR\icons\Icon-sampleVBOCR128.ico" />
+
+        <CustomActionRef Id="WixExitEarlyWithSuccess" />
+        <!-- WixUtilExtension required. on cmdline -ext option -->
+        <InstallUISequence>
+            <Show Dialog="NewerFoundDlg" After="FindRelatedProducts">NEWERFOUND</Show>
+            <Custom Action="WixExitEarlyWithSuccess" After="NewerFoundDlg">NEWERFOUND</Custom>
+        </InstallUISequence>
+        <InstallExecuteSequence>
+            <Custom Action="WixExitEarlyWithSuccess" After="FindRelatedProducts">NEWERFOUND</Custom>
+            <RemoveExistingProducts After="InstallFinalize" />
+        </InstallExecuteSequence>
     </Product>
 </Wix>

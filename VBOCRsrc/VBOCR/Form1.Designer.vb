@@ -38,17 +38,18 @@ Partial Class Form1
         Me.ToolStripButtonApplyCulture = New System.Windows.Forms.ToolStripButton()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.PanelCenter = New System.Windows.Forms.Panel()
-        Me.PanelPictureBox = New System.Windows.Forms.Panel()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.SaveFileDialogImage = New System.Windows.Forms.SaveFileDialog()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.ToolStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
-        Me.PanelCenter.SuspendLayout()
-        Me.PanelPictureBox.SuspendLayout()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
+        Me.SplitContainer1.Panel2.SuspendLayout()
+        Me.SplitContainer1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -139,19 +140,29 @@ Partial Class Form1
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         resources.ApplyResources(Me.ToolStripStatusLabel1, "ToolStripStatusLabel1")
         '
-        'PanelCenter
+        'OpenFileDialog1
         '
-        Me.PanelCenter.Controls.Add(Me.PanelPictureBox)
-        Me.PanelCenter.Controls.Add(Me.TextBox1)
-        resources.ApplyResources(Me.PanelCenter, "PanelCenter")
-        Me.PanelCenter.Name = "PanelCenter"
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
-        'PanelPictureBox
+        'SplitContainer1
         '
-        resources.ApplyResources(Me.PanelPictureBox, "PanelPictureBox")
-        Me.PanelPictureBox.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.PanelPictureBox.Controls.Add(Me.PictureBox1)
-        Me.PanelPictureBox.Name = "PanelPictureBox"
+        resources.ApplyResources(Me.SplitContainer1, "SplitContainer1")
+        Me.SplitContainer1.Name = "SplitContainer1"
+        '
+        'SplitContainer1.Panel1
+        '
+        resources.ApplyResources(Me.SplitContainer1.Panel1, "SplitContainer1.Panel1")
+        Me.SplitContainer1.Panel1.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.SplitContainer1.Panel1.Controls.Add(Me.PictureBox1)
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.TextBox1)
+        '
+        'TextBox1
+        '
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
+        Me.TextBox1.Name = "TextBox1"
         '
         'PictureBox1
         '
@@ -159,21 +170,12 @@ Partial Class Form1
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.TabStop = False
         '
-        'TextBox1
-        '
-        resources.ApplyResources(Me.TextBox1, "TextBox1")
-        Me.TextBox1.Name = "TextBox1"
-        '
-        'OpenFileDialog1
-        '
-        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
-        '
         'Form1
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = Global.VBOCR.My.MySettings.Default.AS_Form1ClientSize
-        Me.Controls.Add(Me.PanelCenter)
+        Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.ToolStrip1)
         Me.DataBindings.Add(New System.Windows.Forms.Binding("ClientSize", Global.VBOCR.My.MySettings.Default, "AS_Form1ClientSize", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
@@ -182,10 +184,12 @@ Partial Class Form1
         Me.ToolStrip1.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
-        Me.PanelCenter.ResumeLayout(False)
-        Me.PanelCenter.PerformLayout()
-        Me.PanelPictureBox.ResumeLayout(False)
-        Me.PanelPictureBox.PerformLayout()
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel1.PerformLayout()
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.PerformLayout()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -195,10 +199,6 @@ Partial Class Form1
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
-    Friend WithEvents PanelCenter As Panel
-    Friend WithEvents PanelPictureBox As Panel
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents TextBox1 As TextBox
     Friend WithEvents ToolStripButtonOpen As ToolStripButton
     Friend WithEvents ToolStripButtonSave As ToolStripButton
     Friend WithEvents ToolStripButtonExtract As ToolStripButton
@@ -214,4 +214,7 @@ Partial Class Form1
     Friend WithEvents ToolStripButtonApplyCulture As ToolStripButton
     Friend WithEvents ToolStripButtonSaveBMP As ToolStripButton
     Friend WithEvents SaveFileDialogImage As SaveFileDialog
+    Friend WithEvents SplitContainer1 As SplitContainer
+    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents TextBox1 As TextBox
 End Class
