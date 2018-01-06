@@ -1,5 +1,6 @@
-﻿'CID:''+va05R~:#72                             update#=  167;         ''~va05R~
+﻿'CID:''+v139R~:#72                             update#=  168;         ''+v139R~
 '************************************************************************************''~v106I~
+'v139 2018/01/03 markWord position invalid when cliprect               ''+v139I~
 'va05 2017/12/26 ext name Jpeg-->jpg,icon-->ico,tiff->tif              ''~va05I~
 'va04 2017/12/25 save cut image to file                                ''~va04I~
 'v110 2017/12/22 Test change of resource culture                       ''~v110I~
@@ -273,8 +274,13 @@ Public Class Cocr                                                      ''~v@@@R~
     '*************************************************************     ''~v@@@I~
     Public Function markWords(Pbmp As Bitmap) As Boolean              ''~v@@@I~
         '** avoid exceotion:Indexed Pixel at Graphics.FromImage for mono color image''~v@@@I~
+        Dim xx0 = 0, yy0 = 0                                           ''+v139I~
         Try                                                            ''~v@@@I~
             '********************                                      ''~v@@@I~
+            If swRectBMP Then                                          ''+v139I~
+                xx0 = CType(clipRect.X / scaleNew, Integer) 'dest and src position''+v139I~
+                yy0 = CType(clipRect.Y / scaleNew, Integer)            ''+v139I~
+            End If                                                     ''+v139I~
             Dim bmpDraw As Bitmap = Pbmp                                 ''~v@@@I~
             Dim g = Graphics.FromImage(bmpDraw)                            ''~v@@@I~
             Dim br As Brush = New SolidBrush(System.Drawing.Color.FromArgb(&H20, System.Drawing.Color.Blue)) ''~v@@@I~
@@ -286,6 +292,8 @@ Public Class Cocr                                                      ''~v@@@R~
                     Dim brect As Windows.Foundation.Rect = word.BoundingRect ''~v@@@I~
                     Dim rect As Rectangle = New System.Drawing.Rectangle(CType(brect.X, Integer), CType(brect.Y, Integer), CType(brect.Width, Integer), CType(brect.Height, Integer)) ''~v@@@I~
                     '                   Trace.W("Word Text=" & word.Text & ",X=" & brect.X & ",Y=" & brect.Y & ",W=" & brect.Width & ",H=" & brect.Height)''~v@@@R~
+                    rect.X += xx0                                      ''+v139I~
+                    rect.Y += yy0                                      ''+v139I~
                     g.FillRectangle(br, rect)                          ''~v@@@I~
                     g.DrawRectangle(Pens.Red, rect)                    ''~v@@@I~
                     '                   text &= word.Text & " "                            ''~v@@@R~
@@ -333,22 +341,22 @@ Public Class Cocr                                                      ''~v@@@R~
     End Function                                                       ''~va04R~
     '*************************************************************     ''~va04R~
     Public Function getImageFormat(Pfmt As ImageFormat) As String      ''~va04R~
-        If Pfmt.equals(ImageFormat.Jpeg) Then                          ''+va05R~
+        If Pfmt.equals(ImageFormat.Jpeg) Then                          ''~va05R~
             Return "jpg"                                               ''~va05I~
         End If                                                         ''~va05I~
-        If Pfmt.equals(ImageFormat.Icon) Then                          ''+va05R~
+        If Pfmt.equals(ImageFormat.Icon) Then                          ''~va05R~
             Return "ico"                                               ''~va05I~
         End If                                                         ''~va05I~
-        If Pfmt.equals(ImageFormat.Tiff) Then                          ''+va05R~
+        If Pfmt.equals(ImageFormat.Tiff) Then                          ''~va05R~
             Return "tif"                                               ''~va05I~
         End If                                                         ''~va05I~
-        If Pfmt.equals(ImageFormat.Png) Then                           ''+va05R~
+        If Pfmt.equals(ImageFormat.Png) Then                           ''~va05R~
             Return "png"       '*lowercase                             ''~va05I~
         End If                                                         ''~va05I~
-        If Pfmt.equals(ImageFormat.Bmp) Then                           ''+va05R~
+        If Pfmt.equals(ImageFormat.Bmp) Then                           ''~va05R~
             Return "bmp"       '*lowercase                             ''~va05I~
         End If                                                         ''~va05I~
-        If Pfmt.equals(ImageFormat.Gif) Then                           ''+va05R~
+        If Pfmt.equals(ImageFormat.Gif) Then                           ''~va05R~
             Return "gif"       '*lowercase                             ''~va05I~
         End If                                                         ''~va05I~
         Dim fmt As String = Pfmt.ToString()                            ''~va04R~

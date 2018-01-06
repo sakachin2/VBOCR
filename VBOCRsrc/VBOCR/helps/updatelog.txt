@@ -1,4 +1,10 @@
-V1.04 : 2017/12/85  gitup   *******************************************************
+'v142 2018/01/05 keep rect after extact for repeated extract button,clear box at next mousedown 
+           form1.vb
+'v139 2018/01/03 markWord position invalid when cliprect               ''~v139I~
+           class2.vb
+'va08 2018/01/05 Try rotate image any degree
+           form1.vb
+V1.04 : 2017/12/25  gitup   *******************************************************
 'va07 2017/12/28 set both picturebox and textbox resizable
            form1.vb
 'va06 2017/12/26 ajust filter index by original extension
@@ -12,7 +18,7 @@ V1.03 : 2017/12/25  gitup   ****************************************************
            Form1,vb
 'va02 2017/12/25 status msg need to be cleared 
            Form1,vb
-'va01 2017/12/25 mousedow did not cleared swRectBMP(do partial extracting)
+'va01 2017/12/25 mousedown did not cleared swRectBMP(do partial extracting)
            Form1,vb
 V1.02 : 2017/12/24  gitup   *******************************************************
 'v113 2017/12/22 put Zorder Top

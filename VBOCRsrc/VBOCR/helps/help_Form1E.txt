@@ -10,6 +10,10 @@ Extracted text partially is shown on another form.
 Use OK button or Copy & Paste to take in the text.
 ImageSave Button enables to save the portion to image file.
 
+"1Åã":
+When On(Yellow), rotate by one degree.
+Use for image with a litte slope.
+
 "Extract":
   Extract text from image document.
   This action take a little bit time.
@@ -23,4 +27,7 @@ ImageSave Button enables to save the portion to image file.
     Another way from "Settings", you can install the Language Pack,
     "Application","Optional Feature", ... "OCR",Download & Install. 
 
-(Form1)                          2017/12/25
+"Save"(Blue):
+  Svae clipped box to another image file.
+
+(Form1)                          2018/01/06

@@ -1,5 +1,9 @@
 (UTF8 encoding)
 *********************************************************************************************
+V1.05 : 2018/01/06 
+
+Support rotation by 1 degree each to enable recognize image with a litte slope.
+
 V1.04 : 2017/12/28 
 
 Set boundery of image and text panel to movable.
