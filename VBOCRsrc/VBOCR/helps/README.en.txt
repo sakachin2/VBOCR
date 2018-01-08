@@ -1,5 +1,9 @@
 (UTF8 encoding)
 *********************************************************************************************
+V1.06 : 2018/01/08 
+
+Adjust marking position of recognized char when rotated by one degree.
+
 V1.05 : 2018/01/06 
 
 Support rotation by 1 degree each to enable recognize image with a litte slope.

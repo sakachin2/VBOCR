@@ -1,6 +1,7 @@
-﻿'CID:''+v139R~:#72                             update#=  168;         ''+v139R~
+﻿'CID:''+v148R~:#72                             update#=  169;         ''~v139R~''+v148R~
 '************************************************************************************''~v106I~
-'v139 2018/01/03 markWord position invalid when cliprect               ''+v139I~
+'v148 2018/01/07 mark line requirs ajustment by textangle?             ''+v148I~
+'v139 2018/01/03 markWord position invalid when cliprect               ''~v139I~
 'va05 2017/12/26 ext name Jpeg-->jpg,icon-->ico,tiff->tif              ''~va05I~
 'va04 2017/12/25 save cut image to file                                ''~va04I~
 'v110 2017/12/22 Test change of resource culture                       ''~v110I~
@@ -274,17 +275,23 @@ Public Class Cocr                                                      ''~v@@@R~
     '*************************************************************     ''~v@@@I~
     Public Function markWords(Pbmp As Bitmap) As Boolean              ''~v@@@I~
         '** avoid exceotion:Indexed Pixel at Graphics.FromImage for mono color image''~v@@@I~
-        Dim xx0 = 0, yy0 = 0                                           ''+v139I~
+        Dim xx0 = 0, yy0 = 0                                           ''~v139I~
         Try                                                            ''~v@@@I~
             '********************                                      ''~v@@@I~
-            If swRectBMP Then                                          ''+v139I~
-                xx0 = CType(clipRect.X / scaleNew, Integer) 'dest and src position''+v139I~
-                yy0 = CType(clipRect.Y / scaleNew, Integer)            ''+v139I~
-            End If                                                     ''+v139I~
+            If swRectBMP Then                                          ''~v139I~
+                xx0 = CType(clipRect.X / scaleNew, Integer) 'dest and src position''~v139I~
+                yy0 = CType(clipRect.Y / scaleNew, Integer)            ''~v139I~
+            End If                                                     ''~v139I~
             Dim bmpDraw As Bitmap = Pbmp                                 ''~v@@@I~
             Dim g = Graphics.FromImage(bmpDraw)                            ''~v@@@I~
             Dim br As Brush = New SolidBrush(System.Drawing.Color.FromArgb(&H20, System.Drawing.Color.Blue)) ''~v@@@I~
             '           Dim text As String = ""                                    ''~v@@@R~
+            Dim angle As Double = CType(result.TextAngle, Double)      ''+v148I~
+            Dim msin As Double                                         ''+v148I~
+            Dim mcos As Double                                         ''+v148I~
+            If angle <> 0 Then                                         ''+v148I~
+                adjustMarkingBoxInit(angle, msin, mcos) '*get sin cosin''+v148I~
+            End If                                                     ''+v148I~
             For Each line As OcrLine In result.Lines                   ''~v@@@I~
                 '               text += line.Text & " "                                ''~v@@@R~
                 '               Trace.W("Line Text=" & line.Text)                      ''~v@@@R~
@@ -292,8 +299,12 @@ Public Class Cocr                                                      ''~v@@@R~
                     Dim brect As Windows.Foundation.Rect = word.BoundingRect ''~v@@@I~
                     Dim rect As Rectangle = New System.Drawing.Rectangle(CType(brect.X, Integer), CType(brect.Y, Integer), CType(brect.Width, Integer), CType(brect.Height, Integer)) ''~v@@@I~
                     '                   Trace.W("Word Text=" & word.Text & ",X=" & brect.X & ",Y=" & brect.Y & ",W=" & brect.Width & ",H=" & brect.Height)''~v@@@R~
-                    rect.X += xx0                                      ''+v139I~
-                    rect.Y += yy0                                      ''+v139I~
+                    If angle <> 0 Then                                 ''+v148I~
+                        Trace.W("Ajust angle angle=" & angle & ",text=" & word.Text)''+v148I~
+                        adjustMarkingBox(bmpDraw, rect, msin, mcos, swRectBMP, clipRect) '*get sin cosin''+v148I~
+                    End If                                             ''+v148I~
+                    rect.X += xx0                                      ''~v139I~
+                    rect.Y += yy0                                      ''~v139I~
                     g.FillRectangle(br, rect)                          ''~v@@@I~
                     g.DrawRectangle(Pens.Red, rect)                    ''~v@@@I~
                     '                   text &= word.Text & " "                            ''~v@@@R~
@@ -306,6 +317,39 @@ Public Class Cocr                                                      ''~v@@@R~
         End Try                                                        ''~v@@@I~
         Return True                                                    ''~v@@@I~
     End Function                                                       ''~v@@@I~
+    '*************************************************************     ''+v148I~
+    Private Sub adjustMarkingBoxInit(Pangle As Double, ByRef Ppsin As Double, ByRef Ppcos As Double)''+v148I~
+        Dim rad As Single = CSng((Pangle / 180) * Math.PI)             ''+v148I~
+        Dim msin As Double = Math.Sin(rad)                             ''+v148I~
+        Dim mcos As Double = Math.Cos(rad)                             ''+v148I~
+        Ppsin = msin                                                   ''+v148I~
+        Ppcos = mcos                                                   ''+v148I~
+        Trace.W("ajustangleInit  msin=" & msin & ",mcos=" & mcos)      ''+v148I~
+    End Sub                                                            ''+v148I~
+    '*************************************************************     ''+v148I~
+    '*x2=x1cos-y1sin, y2=x1sin+y1cos;center is (x/2,y/2)=x0,y0         ''+v148I~
+    '*==>x2=x0+(x1-x0)cos-(y1-y0)sin, y2=y0+(x1-x0)sin+(y1-y0)cos      ''+v148I~
+    '*************************************************************     ''+v148I~
+    Private Sub adjustMarkingBox(Pbmp As Bitmap, ByRef Pprect As Rectangle, Psin As Double, Pcos As Double, PswrectBMP As Boolean, PclipRect As Rectangle)''+v148I~
+        Dim x0 As Double                                               ''+v148I~
+        Dim y0 As Double                                               ''+v148I~
+        If PswrectBMP Then                                             ''+v148I~
+            x0 = PclipRect.Width / 2                                   ''+v148I~
+            y0 = PclipRect.Height / 2                                  ''+v148I~
+        Else                                                           ''+v148I~
+            x0 = Pbmp.Width / 2                                        ''+v148I~
+            y0 = Pbmp.Height / 2                                       ''+v148I~
+        End If                                                         ''+v148I~
+        Dim x1 As Double = Pprect.X                                    ''+v148I~
+        Dim y1 As Double = Pprect.Y                                    ''+v148I~
+        Dim dx As Double = x1 - x0                                     ''+v148I~
+        Dim dy As Double = y1 - y0                                     ''+v148I~
+        Dim x2 As Double = x0 + dx * Pcos - dy * Psin                  ''+v148I~
+        Dim y2 As Double = y0 + dx * Psin + dy * Pcos                  ''+v148I~
+        Pprect.X = CType(x2, Integer)                                  ''+v148I~
+        Pprect.Y = CType(y2, Integer)                                  ''+v148I~
+        Trace.W("ajustangle  xx=" & x1 & ",yy=" & y1 & ",xxnew=" & x2 & ",yynew=" & y2)''+v148I~
+    End Sub                                                            ''+v148I~
     '*************************************************************     ''~v@@@I~
     Public Function makeLines(Plen As Integer) As String               ''~v@@@I~
         Dim sb = New StringBuilder(Plen * 2)                             ''~v@@@I~

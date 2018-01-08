@@ -1,3 +1,15 @@
+V1.06 : 2017/01/08          *******************************************************
+'v152 2018/01/08 zoom also for rotated any degree
+           form1.vb 
+'v151 2018/01/07 show rotate degree on status bar
+           form1.vb 
+'v150 2018/01/07 cliprect shuld be adjusted when degree rotation because source bmp was expanded
+           form1.vb 
+'v149 2018/01/07 box should be cleared by rotate
+           form1.vb 
+'v148 2018/01/07 mark line requirs ajustment by textangle?
+           class2.vb
+V1.05 : 2017/01/06  gitup   *******************************************************
 'v142 2018/01/05 keep rect after extact for repeated extract button,clear box at next mousedown 
            form1.vb
 'v139 2018/01/03 markWord position invalid when cliprect               ''~v139I~
