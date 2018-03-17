@@ -1,3 +1,8 @@
+V1.07 : 2017/03/17          *******************************************************
+'v166 2018/03/04 partial text send;consider selection start/length
+           form2.vb
+'v165 2018/03/04 show caret even if focus lost by selectionStart/Length
+           form1.vb
 V1.06 : 2017/01/08          *******************************************************
 'v152 2018/01/08 zoom also for rotated any degree
            form1.vb 

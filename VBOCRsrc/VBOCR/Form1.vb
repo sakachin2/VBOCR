@@ -1,5 +1,6 @@
-﻿'CID:''+v152R~:#72                             update#=  340;         ''~v152R~
+﻿'CID:''+v165R~:#72                             update#=  351;         ''~v165R~
 '************************************************************************************''~v006I~''~v001I~
+'v165 2018/03/04 show caret even if focus lost by selectionStart/Length''~v165I~
 'v152 2018/01/08 zoom also for rotated any degree                      ''~v152I~
 'v151 2018/01/07 show rotate degree on status bar                      ''~v151I~
 'v150 2018/01/07 cliprect shuld be adjusted when degree rotation because source bmp was expanded''~v150I~
@@ -28,7 +29,7 @@ Imports System.Drawing.Drawing2D                                       ''~va08I~
 
 Public Class Form1                                                     ''~v@@@R~
 
-    Const VERSION = "v1.0.6"                                             ''~va07R~''~v142R~''+v152R~
+    Const VERSION = "v1.0.7"                                             ''~va07R~''~v142R~''~v152R~''+v165R~
     Const FILTER_DEFAULT_IMAGE = "bmp"                                 ''~va07I~
     Const SCALE_INITIAL = 1.0                                            ''~v@@@I~
     Const SCALE_RATE = 0.1                                               ''~v@@@I~
@@ -91,6 +92,9 @@ Public Class Form1                                                     ''~v@@@R~
         swInitialized = True                                             ''~v110I~
         Me.Text = Me.Text & " " & VERSION                                ''~va07I~
         ToolStripButtonDegree1.BackColor = BKC_DegreeOff               ''~va08I~
+        TextBox1.HideSelection = False 'do not hide selection when focus lost5R~''~v165R~
+        AddHandler TextBox1.LostFocus, AddressOf lostFocusTB           ''~v165I~
+        AddHandler TextBox1.GotFocus, AddressOf gotFocusTB             ''~v165I~
     End Sub                                                            ''~v@@@I~
     '**************************************************************************************''~v@@@I~
     Private Sub Form1_Closing(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing ''~v@@@I~
@@ -513,7 +517,7 @@ Public Class Form1                                                     ''~v@@@R~
             If ctrDegree <> 0 Then                                     ''~v152I~
                 zoomBMP = rotateAnyBMP                                 ''~v152I~
             Else                                                       ''~v152I~
-            zoomBMP = orgBMP                                             ''~v@@@I~
+                zoomBMP = orgBMP                                             ''~v@@@I~
             End If                                                     ''~v152I~
         End If                                                         ''~v@@@I~
         Try                                                            ''~v@@@I~
@@ -531,8 +535,8 @@ Public Class Form1                                                     ''~v@@@R~
             End If                                                     ''~v@@@I~
             ''~v@@@I~
             scaleNext = adjustScale(zoomBMP, Pzoom, scaleNext, scaleNew) ''~v@@@R~
-'*          hh = CType(orgBMP.Height * scaleNext, Integer)                             ''~v@@@R~''~v001R~''~v152R~
-'*          ww = CType(orgBMP.Width * scaleNext, Integer)                              ''~v@@@R~''~v001R~''~v152R~
+            '*          hh = CType(orgBMP.Height * scaleNext, Integer)                             ''~v@@@R~''~v001R~''~v152R~
+            '*          ww = CType(orgBMP.Width * scaleNext, Integer)                              ''~v@@@R~''~v001R~''~v152R~
             hh = CType(zoomBMP.Height * scaleNext, Integer)            ''~v152I~
             ww = CType(zoomBMP.Width * scaleNext, Integer)             ''~v152I~
             If scaleNext < SCALE_LIMIT_LOW Then                        ''~v@@@M~
@@ -559,8 +563,8 @@ Public Class Form1                                                     ''~v@@@R~
         Try
             Dim bitmapZoom As Bitmap                                   ''~v@@@I~
             Dim hh, ww As Integer ''~v@@@I~
-'*          hh = CType(orgBMP.Height * Pzoom, Integer)                                 ''~v@@@I~''~v001R~''~v152R~
-'*          ww = CType(orgBMP.Width * Pzoom, Integer)                                  ''~v@@@I~''~v001R~''~v152R~
+            '*          hh = CType(orgBMP.Height * Pzoom, Integer)                                 ''~v@@@I~''~v001R~''~v152R~
+            '*          ww = CType(orgBMP.Width * Pzoom, Integer)                                  ''~v@@@I~''~v001R~''~v152R~
             Dim bmp As Bitmap                                          ''~v152I~
             If ctrDegree <> 0 Then                                     ''~v152I~
                 bmp = rotateAnyBMP                                     ''~v152I~
@@ -917,6 +921,15 @@ Public Class Form1                                                     ''~v@@@R~
         End If                                                         ''~v150I~
         iOCR.saveImage(Pfnm, Pfmt, swRectBMP, bmp, scaleNew, clipRect) ''~v150I~
     End Sub                                                            ''~va04I~
+
+    Private Sub TextBox1_Leave(sender As Object, e As EventArgs) Handles TextBox1.Leave ''~v165R~
+        leaveTB()                                                      ''~v165R~
+    End Sub                                                            ''~v165R~
+    ''~v165R~
+    Private Sub TextBox1_Enter(sender As Object, e As EventArgs) Handles TextBox1.Enter ''~v165R~
+        enterTB()                                                      ''~v165I~
+    End Sub                                                            ''~v165R~
+
     Private Function getFileNameExt(Pfnm As String, ByRef Pppath As String, ByRef Ppext As String) As Boolean ''~va04I~
         If Pfnm Is Nothing OrElse Pfnm.Length = 0 Then                        ''~va04I~
             Return False                                               ''~va04I~
@@ -933,21 +946,57 @@ Public Class Form1                                                     ''~v@@@R~
         Ppext = ext                                                      ''~va04I~
         Return True                                                    ''~va04I~
     End Function                                                            ''~va04I~
-    Private Function getSaveFilterIndex(Poldidx as Integer,PstrFilter as String,Pext as String) as Integer''~va06I~
-    '* Bitmap|*.bmp|Jpeg|*.jpg|Png|*.png|Tiff|*.tif|Icon|*.ico|All Files|*.*"''~va06I~
-    	Dim idx as Integer=Poldidx                                     ''~va06I~
+    Private Function getSaveFilterIndex(Poldidx As Integer, PstrFilter As String, Pext As String) As Integer ''~va06I~
+        '* Bitmap|*.bmp|Jpeg|*.jpg|Png|*.png|Tiff|*.tif|Icon|*.ico|All Files|*.*"''~va06I~
+        Dim idx As Integer = Poldidx                                     ''~va06I~
         Dim fmt As Imaging.ImageFormat = iOCR.str2Fmt(Pext)                      ''~va06I~
         Dim ext As String = iOCR.getImageFormat(fmt)                         ''~va06I~
-        Dim pos as Integer=PstrFilter.indexOf(ext)                     ''~va06I~
-        if pos>0                                                       ''~va06I~
-        	Dim idx2 as Integer=0                                      ''~va06I~
+        Dim pos As Integer = PstrFilter.IndexOf(ext)                     ''~va06I~
+        If pos > 0 Then                                                       ''~va06I~
+            Dim idx2 As Integer = 0                                      ''~va06I~
             For ii As Integer = 0 To pos                                 ''~va06I~
                 If PstrFilter.Chars(ii) = "|"c Then                           ''~va06I~
                     idx2 += 1                                            ''~va06I~
                 End If                                                 ''~va06I~
             Next                                                       ''~va06I~
-            idx =CType((idx2+1)/2,Integer)                              ''~va06I~
-        end if                                                         ''~va06I~
-        return idx                                                     ''~va06I~
+            idx = CType((idx2 + 1) / 2, Integer)                              ''~va06I~
+        End If                                                         ''~va06I~
+        Return idx                                                     ''~va06I~
     End Function                                                       ''~va06I~
+    '****************************************************************************''~v165I~
+    Private swLeave As Boolean = False                                         ''~v165I~
+    Private selStart As Integer = -1                                     ''~v165I~
+    '****************************                                      ''~v165I~
+    Private Sub saveCaret()                                            ''~v165R~
+        Trace.W("Form1 saveCaret")                                    ''~v106R~''~v165R~
+        If TextBox1.SelectionLength = 0 Then                                  ''~v165R~
+            selStart = TextBox1.SelectionStart                         ''~v165I~
+            swLeave = True                                               ''~v165I~
+            TextBox1.SelectionLength = 1                                 ''~v165I~
+        else                                                           ''~v165I~
+            swLeave = False                                            ''~v165I~
+        End If                                                         ''~v165I~
+    End Sub                                                            ''~v165I~
+    Private Sub restoreCaret()                                         ''~v165I~
+        Trace.W("Form1 TB Enter")                                      ''~v165I~
+        If Not swLeave Then                                            ''~v165I~
+            Exit Sub                                                   ''~v165I~
+        End If                                                         ''~v165I~
+        TextBox1.SelectionStart = selStart
+        TextBox1.SelectionLength = 0
+    End Sub                                                            ''~v165I~
+    Private Sub leaveTB()                                              ''~v165I~
+        Trace.W("Form1 TB Leave")                                      ''~v165I~
+    End Sub                                                            ''~v165I~
+    Private Sub enterTB()                                              ''~v165I~
+        Trace.W("Form1 TB Enter")                                     ''~v165R~
+    End Sub                                                            ''~v165I~
+    Private Sub lostFocusTB()                                          ''~v165I~
+        Trace.W("Form1 TB LostFocus")                                  ''~v165I~
+        saveCaret()                                                    ''~v165I~
+    End Sub                                                            ''~v165I~
+    Private Sub gotFocusTB()                                           ''~v165I~
+        Trace.W("Form1 TB GotFocus")                                   ''~v165I~
+        restoreCaret()                                                 ''~v165I~
+    End Sub                                                            ''~v165I~
 End Class

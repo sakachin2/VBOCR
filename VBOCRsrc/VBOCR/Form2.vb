@@ -1,6 +1,7 @@
-﻿'CID:''+v106R~:#72                             update#=  196;         ''~v106I~
+﻿'CID:''+v166R~:#72                             update#=  199;         ''~v106I~''+v166R~
 '************************************************************************************''~v106I~
-'v106 2017/12/20 partially extract from image(box by mouse dragging)   ''+v106I~
+'v166 2018/03/04 partial text send;consider selection start/length     ''+v166I~
+'v106 2017/12/20 partially extract from image(box by mouse dragging)   ''~v106I~
 '************************************************************************************''~v106I~
 Public Class Form2                                                     ''~v106R~
     Private parentFrm As Form1                                         ''~v106R~
@@ -36,6 +37,22 @@ Public Class Form2                                                     ''~v106R~
     End Sub                                                            ''~v106I~
     '**************************************************                ''~v106I~
     Public Sub sendText()                                              ''~v106I~
+    	Dim spos as integer=TextBox.SelectionStart                     ''+v166I~
+    	Dim len as integer=TextBox.SelectionLength                     ''+v166I~
+        if spos>=0 andalso len>0                                       ''+v166I~
+            Dim epos As Integer = Math.Min(TextBox.Text.Length, spos + len)''+v166I~
+            len =epos-spos                                             ''+v166I~
+            parentFrm.receivePartialText(TextBox.Text.Substring(spos, len))''+v166I~
+        Else                                                           ''+v166I~
         parentFrm.receivePartialText(TextBox.Text)                     ''~v106R~
-    End sub                                                            ''~v106I~
+        end if                                                         ''+v166I~
+    End Sub                                                            ''~v106I~
+
+    Private Sub TextBox_Enter(sender As Object, e As EventArgs) Handles TextBox.Enter
+        Trace.W("Form2 TB Enter")                                     ''~v106R~
+    End Sub
+
+    Private Sub TextBox_Leave(sender As Object, e As EventArgs) Handles TextBox.Leave
+        Trace.W("Form2 TB Leave")                                     ''~v106R~
+    End Sub
 End Class

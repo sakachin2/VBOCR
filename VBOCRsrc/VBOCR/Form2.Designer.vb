@@ -36,30 +36,30 @@ Partial Class Form2
         '
         'ToolStrip1
         '
-        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButtonOK, Me.ToolStripSeparator1, Me.ToolStripSeparator2, Me.ToolStripButtonHelp})
+        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.Name = "ToolStrip1"
         '
         'ToolStripButtonOK
         '
-        resources.ApplyResources(Me.ToolStripButtonOK, "ToolStripButtonOK")
         Me.ToolStripButtonOK.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        resources.ApplyResources(Me.ToolStripButtonOK, "ToolStripButtonOK")
         Me.ToolStripButtonOK.Name = "ToolStripButtonOK"
         '
         'ToolStripSeparator1
         '
-        resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
         '
         'ToolStripSeparator2
         '
-        resources.ApplyResources(Me.ToolStripSeparator2, "ToolStripSeparator2")
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        resources.ApplyResources(Me.ToolStripSeparator2, "ToolStripSeparator2")
         '
         'ToolStripButtonHelp
         '
-        resources.ApplyResources(Me.ToolStripButtonHelp, "ToolStripButtonHelp")
         Me.ToolStripButtonHelp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        resources.ApplyResources(Me.ToolStripButtonHelp, "ToolStripButtonHelp")
         Me.ToolStripButtonHelp.Name = "ToolStripButtonHelp"
         '
         'PanelTextBox

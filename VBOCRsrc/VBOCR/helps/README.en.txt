@@ -1,5 +1,11 @@
 (UTF8 encoding)
 *********************************************************************************************
+V1.07 : 2018/03/17 
+
+.Reverse display one char on caret position even when focus lost 
+ for sending text by OK button of paqrtial extracted text form.
+.Send by OK button accept patial text by mouse dragging.
+
 V1.06 : 2018/01/08 
 
 Adjust marking position of recognized char when rotated by one degree.
@@ -27,6 +33,7 @@ You can get image file by "Windows Fax and Scan" etc.
 To install, double click SetupVBOCR.msi on Explorer.
 Application name on ControlPanel is sampleVBOCR
 MSVS2017 Comunity project source is on GitHub sakachin2/VBOCR.
+See also GitHub sakachin2/VBI2KWRT for function of text manipulation.
 
 Please send your sudgestion or bug reports to mail:sakachin2@yahoo.co.jp
 

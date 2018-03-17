@@ -1,4 +1,4 @@
-﻿# VBOCR                    2017/01/08 v1.06
+﻿# VBOCR                    2017/03/17 v1.07
 
 Tool of TextExtraction from image file using Microsoft OCR Library for Windows (Windows10).
 To install, double click SetupVBOCR.msi.
