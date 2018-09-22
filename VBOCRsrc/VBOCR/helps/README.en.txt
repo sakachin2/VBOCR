@@ -1,5 +1,10 @@
 (UTF8 encoding)
 *********************************************************************************************
+V1.08 : 2018/09/22 
+
+(Bug)"OK" buttun of dialog showing partially extracted text replaces a character on the cursor.
+"OpenFile" Menu button supports MRU(MostRecentlyUsed) up to 10 files.
+
 V1.07 : 2018/03/17 
 
 .Reverse display one char on caret position even when focus lost 

@@ -136,4 +136,10 @@
   <data name="Icon_sampleVBOCR128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\icons\Icon-sampleVBOCR128.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="MENU_NEWTEXT" xml:space="preserve">
+    <value>|新規作成|</value>
+  </data>
+  <data name="MENU_NEWFILE" xml:space="preserve">
+    <value>|新しいファイル|</value>
+  </data>
 </root>

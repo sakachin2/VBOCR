@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,14 +20,14 @@ Partial Class Form1
     'メモ: 以下のプロシージャは Windows フォーム デザイナーで必要です。
     'Windows フォーム デザイナーを使用して変更できます。  
     'コード エディターを使って変更しないでください。
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-        Me.ToolStripButtonOpen = New System.Windows.Forms.ToolStripButton()
+'*      Me.ToolStripButtonOpen = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButtonSave = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButtonZoomIn = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButtonZoomOut = New System.Windows.Forms.ToolStripButton()
@@ -40,6 +40,8 @@ Partial Class Form1
         Me.ToolStripButtonHelp = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripTextBoxCulture = New System.Windows.Forms.ToolStripTextBox()
         Me.ToolStripButtonApplyCulture = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripDropDownButtonFile = New System.Windows.Forms.ToolStripDropDownButton()
+        Me.ToolStripMenuItemNewFile = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
@@ -82,15 +84,16 @@ Partial Class Form1
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButtonOpen, Me.ToolStripButtonSave, Me.ToolStripButtonZoomIn, Me.ToolStripButtonZoomOut, Me.ToolStripButtonDegree1, Me.ToolStripButtonRotateCCW, Me.ToolStripButtonRotateCW, Me.ToolStripComboBoxLang, Me.ToolStripButtonExtract, Me.ToolStripButtonSaveBMP, Me.ToolStripButtonHelp, Me.ToolStripTextBoxCulture, Me.ToolStripButtonApplyCulture})
+'*      Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButtonOpen, Me.ToolStripButtonSave, Me.ToolStripButtonZoomIn, Me.ToolStripButtonZoomOut, Me.ToolStripButtonDegree1, Me.ToolStripButtonRotateCCW, Me.ToolStripButtonRotateCW, Me.ToolStripComboBoxLang, Me.ToolStripButtonExtract, Me.ToolStripButtonSaveBMP, Me.ToolStripButtonHelp, Me.ToolStripTextBoxCulture, Me.ToolStripButtonApplyCulture, Me.ToolStripDropDownButtonFile})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripDropDownButtonFile,Me.ToolStripButtonSave, Me.ToolStripButtonZoomIn, Me.ToolStripButtonZoomOut, Me.ToolStripButtonDegree1, Me.ToolStripButtonRotateCCW, Me.ToolStripButtonRotateCW, Me.ToolStripComboBoxLang, Me.ToolStripButtonExtract, Me.ToolStripButtonSaveBMP, Me.ToolStripButtonHelp, Me.ToolStripTextBoxCulture, Me.ToolStripButtonApplyCulture})
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.Name = "ToolStrip1"
         '
-        'ToolStripButtonOpen
-        '
-        Me.ToolStripButtonOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        resources.ApplyResources(Me.ToolStripButtonOpen, "ToolStripButtonOpen")
-        Me.ToolStripButtonOpen.Name = "ToolStripButtonOpen"
+'*        'ToolStripButtonOpen
+'*        '
+'*        Me.ToolStripButtonOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+'*        resources.ApplyResources(Me.ToolStripButtonOpen, "ToolStripButtonOpen")
+'*        Me.ToolStripButtonOpen.Name = "ToolStripButtonOpen"
         '
         'ToolStripButtonSave
         '
@@ -163,6 +166,18 @@ Partial Class Form1
         resources.ApplyResources(Me.ToolStripButtonApplyCulture, "ToolStripButtonApplyCulture")
         Me.ToolStripButtonApplyCulture.Name = "ToolStripButtonApplyCulture"
         '
+        'ToolStripDropDownButtonFile
+        '
+        Me.ToolStripDropDownButtonFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripDropDownButtonFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemNewFile})
+        resources.ApplyResources(Me.ToolStripDropDownButtonFile, "ToolStripDropDownButtonFile")
+        Me.ToolStripDropDownButtonFile.Name = "ToolStripDropDownButtonFile"
+        '
+        'ToolStripMenuItemNewFile
+        '
+        Me.ToolStripMenuItemNewFile.Name = "ToolStripMenuItemNewFile"
+        resources.ApplyResources(Me.ToolStripMenuItemNewFile, "ToolStripMenuItemNewFile")
+        '
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
@@ -207,7 +222,7 @@ Partial Class Form1
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
-    Friend WithEvents ToolStripButtonOpen As ToolStripButton
+'*  Friend WithEvents ToolStripButtonOpen As ToolStripButton
     Friend WithEvents ToolStripButtonSave As ToolStripButton
     Friend WithEvents ToolStripButtonExtract As ToolStripButton
     Friend WithEvents ToolStripButtonZoomIn As ToolStripButton
@@ -226,4 +241,6 @@ Partial Class Form1
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents ToolStripButtonDegree1 As ToolStripButton
+    Friend WithEvents ToolStripDropDownButtonFile As ToolStripDropDownButton
+    Friend WithEvents ToolStripMenuItemNewFile As ToolStripMenuItem
 End Class

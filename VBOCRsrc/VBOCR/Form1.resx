@@ -181,7 +181,7 @@
     <value>Both</value>
   </data>
   <data name="TextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>512, 122</value>
+    <value>690, 122</value>
   </data>
   <data name="TextBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -211,7 +211,7 @@
     <value>1</value>
   </data>
   <data name="SplitContainer1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>512, 371</value>
+    <value>690, 371</value>
   </data>
   <data name="SplitContainer1.SplitterDistance" type="System.Int32, mscorlib">
     <value>245</value>
@@ -234,49 +234,29 @@
   <metadata name="ToolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="ToolStripButtonOpen.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        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
-        l3iZAAAAAElFTkSuQmCC
-</value>
+  <data name="ToolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
-  <data name="ToolStripButtonOpen.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
-    <value>None</value>
+  <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>690, 42</value>
   </data>
-  <data name="ToolStripButtonOpen.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
+  <data name="ToolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="ToolStripButtonOpen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 39</value>
+  <data name="ToolStrip1.Text" xml:space="preserve">
+    <value>ToolStrip1</value>
   </data>
-  <data name="ToolStripButtonOpen.Text" xml:space="preserve">
-    <value>Open</value>
+  <data name="&gt;&gt;ToolStrip1.Name" xml:space="preserve">
+    <value>ToolStrip1</value>
   </data>
-  <data name="ToolStripButtonOpen.ToolTipText" xml:space="preserve">
-    <value>ファイルを開く</value>
+  <data name="&gt;&gt;ToolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;ToolStrip1.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="ToolStripButtonSave.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -691,7 +671,7 @@
     <value>No</value>
   </data>
   <data name="ToolStripTextBoxCulture.Size" type="System.Drawing.Size, System.Drawing">
-    <value>50, 23</value>
+    <value>50, 42</value>
   </data>
   <data name="ToolStripTextBoxCulture.Text" xml:space="preserve">
     <value>カルチャー</value>
@@ -718,46 +698,66 @@
     <value>Magenta</value>
   </data>
   <data name="ToolStripButtonApplyCulture.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 19</value>
+    <value>35, 39</value>
   </data>
   <data name="ToolStripButtonApplyCulture.Text" xml:space="preserve">
     <value>適用</value>
   </data>
-  <data name="ToolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="ToolStripDropDownButtonFile.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        ZUiHAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>512, 42</value>
+  <data name="ToolStripDropDownButtonFile.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
+    <value>None</value>
   </data>
-  <data name="ToolStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="ToolStripDropDownButtonFile.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
   </data>
-  <data name="ToolStrip1.Text" xml:space="preserve">
-    <value>ToolStrip1</value>
+  <data name="ToolStripDropDownButtonFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 39</value>
   </data>
-  <data name="&gt;&gt;ToolStrip1.Name" xml:space="preserve">
-    <value>ToolStrip1</value>
+  <data name="ToolStripDropDownButtonFile.Text" xml:space="preserve">
+    <value>ToolStripDropDownButton1</value>
   </data>
-  <data name="&gt;&gt;ToolStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ToolStripMenuItemNewFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
-  <data name="&gt;&gt;ToolStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;ToolStrip1.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="ToolStripMenuItemNewFile.Text" xml:space="preserve">
+    <value>NewFile</value>
   </data>
   <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>124, 17</value>
   </metadata>
-  <data name="ToolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 17</value>
-  </data>
   <data name="StatusStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 413</value>
   </data>
   <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>512, 22</value>
+    <value>690, 22</value>
   </data>
   <data name="StatusStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -777,6 +777,9 @@
   <data name="&gt;&gt;StatusStrip1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="ToolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 17</value>
+  </data>
   <metadata name="OpenFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>241, 17</value>
   </metadata>
@@ -788,6 +791,9 @@
   </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>en-GB</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 12</value>
@@ -871,12 +877,6 @@
   <data name="$this.Text" xml:space="preserve">
     <value>VBOCR</value>
   </data>
-  <data name="&gt;&gt;ToolStripButtonOpen.Name" xml:space="preserve">
-    <value>ToolStripButtonOpen</value>
-  </data>
-  <data name="&gt;&gt;ToolStripButtonOpen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;ToolStripButtonSave.Name" xml:space="preserve">
     <value>ToolStripButtonSave</value>
   </data>
@@ -948,6 +948,18 @@
   </data>
   <data name="&gt;&gt;ToolStripButtonApplyCulture.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripDropDownButtonFile.Name" xml:space="preserve">
+    <value>ToolStripDropDownButtonFile</value>
+  </data>
+  <data name="&gt;&gt;ToolStripDropDownButtonFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripDropDownButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripMenuItemNewFile.Name" xml:space="preserve">
+    <value>ToolStripMenuItemNewFile</value>
+  </data>
+  <data name="&gt;&gt;ToolStripMenuItemNewFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ToolStripStatusLabel1.Name" xml:space="preserve">
     <value>ToolStripStatusLabel1</value>

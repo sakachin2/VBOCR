@@ -18,6 +18,10 @@ Use for image with a litte slope.
   Extract text from image document.
   This action take a little bit time.
   Extracted text is show to bellow.
+  (Note).
+    Some text line may be split and be mixed up the order.	
+    And a space is inserted between each characteres for Japanes text.
+    These are corrected on Another GitHub package:VBI2KWRT.
 
 "Language":
   You can select another Language if LanguagePack is installed.

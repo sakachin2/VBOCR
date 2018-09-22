@@ -4,7 +4,7 @@
 <!-- major upgrade :change ProductCode(id=*),ProductVesion,PackageCode(bypass Id) -->
 <!-- Upgrade,UpgradeVersion is effenctive ony for Major upgrade; prev version will be uninstalled by major upgrade-->
 <!--  When versionup  change version = upgradeversion max of PREV = min of NEWER --> 
-    <Product Id="*" Name="sampleVBOCR" Language="1033" Version="1.0.7" Manufacturer="sakachin2"
+    <Product Id="*" Name="sampleVBOCR" Language="1033" Version="1.0.8" Manufacturer="sakachin2"
 		 UpgradeCode="5DFB9A2C-9768-42E2-A3FF-512821010F62">
         	<!-- set minimum=current version(include=no) : newer than current version will be reject(OnlyDetect=Yes) -->
         	<!-- set maximum=current version(include=no) : older than current version will be removed(OnlyDetect=no) -->
@@ -20,10 +20,10 @@
 -->
         <Upgrade Id="5DFB9A2C-9768-42E2-A3FF-512821010F62">
             <UpgradeVersion OnlyDetect="yes" Property="NEWERFOUND"
-				 Minimum="1.0.7" IncludeMinimum="no" />
+				 Minimum="1.0.8" IncludeMinimum="no" />
         	<UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND"
             	Minimum="1.0.0" IncludeMinimum="yes"
-            	Maximum="1.0.7" IncludeMaximum="no"
+            	Maximum="1.0.8" IncludeMaximum="no"
             />
         </Upgrade>
         <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />

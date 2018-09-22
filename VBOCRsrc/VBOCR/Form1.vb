@@ -1,5 +1,8 @@
-﻿'CID:''+v165R~:#72                             update#=  351;         ''~v165R~
+﻿'CID:''+va76R~:#72                             update#=  383;        ''~va76R~
 '************************************************************************************''~v006I~''~v001I~
+'va76 2018/09/20 support MRU                                           ''~va76I~
+'v175 2018/09/13 (Bug)"OK" on partial extracted form, scroll to top page of Form3''~v175I~
+'v174 2018/09/13 (Bug by v165) SendButton from WordDialog always replace a char on csr''~v174I~
 'v165 2018/03/04 show caret even if focus lost by selectionStart/Length''~v165I~
 'v152 2018/01/08 zoom also for rotated any degree                      ''~v152I~
 'v151 2018/01/07 show rotate degree on status bar                      ''~v151I~
@@ -29,7 +32,7 @@ Imports System.Drawing.Drawing2D                                       ''~va08I~
 
 Public Class Form1                                                     ''~v@@@R~
 
-    Const VERSION = "v1.0.7"                                             ''~va07R~''~v142R~''~v152R~''+v165R~
+    Const VERSION = "v1.0.8"                                             ''~va07R~''~v142R~''~v152R~''~v165R~''+va76R~
     Const FILTER_DEFAULT_IMAGE = "bmp"                                 ''~va07I~
     Const SCALE_INITIAL = 1.0                                            ''~v@@@I~
     Const SCALE_RATE = 0.1                                               ''~v@@@I~
@@ -71,6 +74,8 @@ Public Class Form1                                                     ''~v@@@R~
     Private swDegree As Boolean = False                                ''~va08R~
     Private ctrDegree As Integer = 0                                     ''~va08I~
     Private ctrDegreeMsg As Integer = 0                                ''~v151I~
+    Private MRUList As New List(Of String)                         ''~7421R~''~7522I~''~va76M~
+    Private MRU As New ClassMRU()                                      ''~v012I~''~va76I~
     '**************************************************************************************''~v@@@I~
     Public Sub New()       'from Main.vb                               ''~v110R~
         setIsLangJP()                                                  ''~v110I~
@@ -95,6 +100,7 @@ Public Class Form1                                                     ''~v@@@R~
         TextBox1.HideSelection = False 'do not hide selection when focus lost5R~''~v165R~
         AddHandler TextBox1.LostFocus, AddressOf lostFocusTB           ''~v165I~
         AddHandler TextBox1.GotFocus, AddressOf gotFocusTB             ''~v165I~
+        loadMRUList()                                              ''~v112R~''~va76I~
     End Sub                                                            ''~v@@@I~
     '**************************************************************************************''~v@@@I~
     Private Sub Form1_Closing(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing ''~v@@@I~
@@ -119,9 +125,9 @@ Public Class Form1                                                     ''~v@@@R~
         PBmouseMove(e)                                                 ''~v106R~
     End Sub                                                            ''~v106I~
     '**************************************************
-    Private Sub ToolStripButtonOpen_Click(ByVal sender As System.Object, ByVal e As EventArgs) Handles ToolStripButtonOpen.Click ''~v@@@R~
-        openFileDialog_Image()
-    End Sub
+'*  Private Sub ToolStripButtonOpen_Click(ByVal sender As System.Object, ByVal e As EventArgs) Handles ToolStripButtonOpen.Click ''~v@@@R~''~va76R~
+'*      openFileDialog_Image()                                         ''~va76R~
+'*  End Sub                                                            ''~va76R~
     '**************************************************                ''~v@@@I~
     Private Sub ToolStripButtonExtract_Click(ByVal sender As System.Object, ByVal e As EventArgs) Handles ToolStripButtonExtract.Click ''~v@@@R~
         extractText()
@@ -216,7 +222,7 @@ Public Class Form1                                                     ''~v@@@R~
         OpenFileDialog1.FilterIndex = imageFileFilterIndex
         If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
             Dim fnm As String = OpenFileDialog1.FileName
-            '           insertMRUList(1, fnm)      '1:imagefile
+            insertMRUList(1, fnm)      '1:imagefile                    ''~va76R~
             Dim basename As String = System.IO.Path.GetFileNameWithoutExtension(fnm)
             imageFileName = basename
             '           kanjiFilename = basename
@@ -226,14 +232,18 @@ Public Class Form1                                                     ''~v@@@R~
     End Sub
     '*************************************************************
     Private Sub openImageBox(Pfnm As String)
-        imageFileName = Pfnm
-        Me.Text = Pfnm                                                  ''~v@@@R~
-        Dim newbmp As Bitmap = DirectCast(System.Drawing.Image.FromFile(Pfnm), Bitmap)                ''~v@@@R~''~v001R~
-        saveOrgBMP(newbmp)                                             ''~v@@@I~
-        ctrDegree = 0                                                    ''~va08I~
-        scaleNew = adjustScale(newbmp, scaleNew)                          ''~v@@@I~
-        drawZoom(newbmp, scaleNew)                                      ''~v@@@I~
-        swRectBMP = False    '*initial                                 ''~v142I~
+        Try                                                            ''~va76I~
+            imageFileName = Pfnm
+            Me.Text = Pfnm                                                  ''~v@@@R~
+            Dim newbmp As Bitmap = DirectCast(System.Drawing.Image.FromFile(Pfnm), Bitmap)                ''~v@@@R~''~v001R~
+            saveOrgBMP(newbmp)                                             ''~v@@@I~
+            ctrDegree = 0                                                    ''~va08I~
+            scaleNew = adjustScale(newbmp, scaleNew)                          ''~v@@@I~
+            drawZoom(newbmp, scaleNew)                                      ''~v@@@I~
+            swRectBMP = False    '*initial                                 ''~v142I~
+        Catch ex As Exception                                          ''~va76I~
+            ReadError(Pfnm, ex)                                        ''~va76I~
+        End Try                                                        ''~va76I~
     End Sub
     '*************************************************************     ''~v@@@I~
     Private Sub extractText()                                          ''~v@@@R~
@@ -803,6 +813,7 @@ Public Class Form1                                                     ''~v@@@R~
     End Sub                                                            ''~v106I~
     '*************************************************************     ''~v106I~
     Public Sub receivePartialText(Ptext As String)                   ''~v106I~
+        restoreCaret()                                                 ''~v174I~
         Dim pos As Integer = TextBox1.SelectionStart                    ''~v106I~
         Dim cutlen As Integer = TextBox1.SelectionLength                   ''~v106I~
         Dim txtold As String = TextBox1.Text                             ''~v106I~
@@ -815,7 +826,8 @@ Public Class Form1                                                     ''~v@@@R~
         TextBox1.Text = txtnew                                           ''~v106I~
         TextBox1.SelectionStart = pos                                    ''~v106I~
         TextBox1.SelectionLength = txtadd.Length                         ''~v106I~
-        Form1.showTop(CType(Me, Form))                                  ''~v113I~
+        '*      Form1.showTop(CType(Me, Form))                                  ''~v113I~''~v175R~
+        TextBox1.ScrollToCaret()  '*above set text set caretr to top page,ajust to insterted text pos''~v175I~
     End Sub                                                            ''~v106I~
     '*************************************************************     ''~v110I~
     Public Sub setCulture()                                            ''~v110I~
@@ -973,7 +985,7 @@ Public Class Form1                                                     ''~v@@@R~
             selStart = TextBox1.SelectionStart                         ''~v165I~
             swLeave = True                                               ''~v165I~
             TextBox1.SelectionLength = 1                                 ''~v165I~
-        else                                                           ''~v165I~
+        Else                                                           ''~v165I~
             swLeave = False                                            ''~v165I~
         End If                                                         ''~v165I~
     End Sub                                                            ''~v165I~
@@ -984,6 +996,7 @@ Public Class Form1                                                     ''~v@@@R~
         End If                                                         ''~v165I~
         TextBox1.SelectionStart = selStart
         TextBox1.SelectionLength = 0
+        swLeave = False                                                  ''~v174I~
     End Sub                                                            ''~v165I~
     Private Sub leaveTB()                                              ''~v165I~
         Trace.W("Form1 TB Leave")                                      ''~v165I~
@@ -999,4 +1012,121 @@ Public Class Form1                                                     ''~v@@@R~
         Trace.W("Form1 TB GotFocus")                                   ''~v165I~
         restoreCaret()                                                 ''~v165I~
     End Sub                                                            ''~v165I~
+    '*************************************************************     ''~v112R~''~va76I~
+    Private Sub loadMRUList()                                          ''~v112R~''~va76I~
+        loadMRUListSub(1)                                              ''~7522I~''~va76I~
+        '*      Dim item As ToolStripMenuItem = ToolStripMenuItemFile          ''~v112R~''~va76I~
+        '*      loadMRUListForm2(item)                          ''~v112R~      ''~va76R~
+        loadMRUListForm2()                                             ''~va76I~
+    End Sub                                                            ''~v112I~''~va76I~
+    '*************************************************************     ''~va76I~
+    Private Sub loadMRUListSub(Pcase As Integer)                       ''~7522R~''~va76I~
+        MRU.loadMRUListSub(Pcase)                                      ''~7522R~''~va76I~
+        '*      setMRUListMenu(Pcase)                                          ''~7522I~''~va76I~
+    End Sub                                                            ''~7522I~''~va76I~
+    '*************************************************************     ''~v112I~''~va76I~
+    '*  Public Sub loadMRUListForm2(Pitem As ToolStripMenuItem)            ''~v112R~''~va76R~
+    Public Sub loadMRUListForm2()                                      ''~va76I~
+        '* From Fom2 at form load                                          ''~v112R~''~va76I~
+        '*      setMRUListMenu(1, 4, Pitem)                                      ''~v112I~''~va76R~
+        setMRUListMenu(1, 4)                                           ''~va76I~
+    End Sub                                                            ''~v112I~''~va76I~
+    '********************************************************************''~v112I~''~va76I~
+    '*  Private Sub setMRUListMenu(PcaseList As Integer, Pcasehandler As Integer, Pitem As ToolStripMenuItem) ''~v112I~''~va76R~
+    Private Sub setMRUListMenu(PcaseList As Integer, Pcasehandler As Integer) ''~va76I~
+        selectMRUList(PcaseList)                                       ''~v112I~''~va76I~
+        '*      setMRUListMenu(Pcasehandler, Pitem)                           ''~v112I~''~va76R~
+        setMRUListMenu(Pcasehandler)                                   ''~va76I~
+    End Sub                                                            ''~v112I~''~va76I~
+    '********************************************************************''~va76I~
+    Private Sub selectMRUList(Pcase As Integer)                        ''~7522R~''~va76I~
+        MRUList = MRU.selectMRUList(Pcase)                               ''~7522I~''~va76I~
+    End Sub                                                            ''~7522R~''~va76I~
+    '********************************************************************''~v112I~''~va76I~
+    '*  Private Sub setMRUListMenu(Pcase As Integer, Pitem As ToolStripMenuItem) ''~v112I~''~va76R~
+    Private Sub setMRUListMenu(Pcase As Integer)                       ''~va76I~
+        '*      Dim itemMRU As ToolStripMenuItem = Pitem                       ''~v112I~''~va76R~
+        Dim ctr As Integer = MRUList.Count                             ''~va76I~
+        '       If ctr = 0 Then                                                       ''~7411I~''~7412R~''~va76I~
+        '           Exit Sub                                                   ''~7411I~''~7412R~''~va76I~
+        '       End If                                                         ''~7411I~''~7412R~''~va76I~
+        '*      itemMRU.DropDownItems.Clear()                                  ''~7411R~''~va76R~
+        ToolStripDropDownButtonFile.DropDownItems.Clear()              ''~va76M~
+        '       If Pcase <> 1 Then 'image                                      ''~7612R~''~v112R~''~va76I~
+        If Pcase <> 1 AndAlso Pcase <> 4 Then 'image                    ''~v112I~''~va76I~
+            ctr += 1                                                     ''~7612R~''~va76I~
+        End If                                                         ''~7612I~''~va76I~
+        For ii As Integer = 0 To ctr                                   ''~7412R~''~va76I~
+            If (ii > ClassMRU.MRULISTSZ) Then                          ''~7522R~''~va76I~
+                Exit For                                               ''~va76I~
+            End If                                                     ''~va76I~
+            Dim mruitem As System.Windows.Forms.ToolStripMenuItem      ''~va76I~
+            mruitem = New System.Windows.Forms.ToolStripMenuItem()     ''~va76I~
+            mruitem.Size = New System.Drawing.Size(152, 22)            ''~va76I~
+            '           If Pcase = 1 Then 'image                                          ''~7612I~''~v112R~''~va76I~
+            If Pcase = 1 OrElse Pcase = 4 Then 'image 1:Form1,4:Form2    ''~v112I~''~va76I~
+                If ii = 0 Then                                               ''~7412I~''~7612R~''~va76I~
+                    mruitem.Text = My.Resources.MENU_NEWFILE()         ''~va76R~
+                Else                                                       ''~7412I~''~7612R~''~va76I~
+                    mruitem.Text = MRUList(ii - 1)                           ''~7412R~''~7612R~''~va76I~
+                End If                                                     ''~7412I~''~7612R~''~va76I~
+            Else                                                       ''~7612I~''~va76I~
+                If ii = 0 Then                                         ''~7612I~''~va76I~
+                    mruitem.Text = My.Resources.MENU_NEWTEXT()         ''~va76R~
+                Else                                                   ''~7612I~''~va76I~
+                    If ii = 1 Then                                     ''~7612I~''~va76I~
+                        mruitem.Text = My.Resources.MENU_NEWFILE()     ''~va76R~
+                    Else                                               ''~7612I~''~va76I~
+                        mruitem.Text = MRUList(ii - 2)                 ''~7612I~''~va76I~
+                    End If                                             ''~7612I~''~va76I~
+                End If                                                 ''~7612I~''~va76I~
+            End If                                                     ''~7612I~''~va76I~
+                    mruitem.Name = "MRUImage"                          ''~v112I~''~va76I~
+                    AddHandler mruitem.Click, AddressOf MRUImageForm2_Click ''~v112I~''~va76I~
+            '*          itemMRU.DropDownItems.Add(mruitem)                         ''~7411R~''~va76R~
+            ToolStripDropDownButtonFile.DropDownItems.Add(mruitem)     ''~va76I~
+        Next                                                           ''~va76I~
+    End Sub                                                            ''~va76I~
+    '**********************************************************************''~v112I~''~va76I~
+    Private Sub MRUImageForm2_Click(sender As System.Object, e As System.EventArgs) Handles ToolStripMenuItemNewFile.Click ''~v112I~''~va76R~
+        Try                                                            ''~v112I~''~va76I~
+            Dim item = DirectCast(sender, ToolStripMenuItem)           ''~v112I~''~va76I~
+            Dim fnm As String                                          ''~v112I~''~va76I~
+            fnm = item.Text                                            ''~v112I~''~va76I~
+            If fnm.CompareTo(My.Resources.MENU_NEWFILE()) = 0 Then     ''~va76R~
+                '*              ImageToolStripMenuItem_Click(sender, e)                ''~v112I~''~va76R~
+                openFileDialog_Image()                                 ''~va76I~
+            Else                                                       ''~v112I~''~va76I~
+                insertMRUList(1, fnm)      '1:imagefile                ''~v112I~''~va76I~
+                openImageBoxForm2(fnm)                                 ''~v112I~''~va76I~
+            End If                                                     ''~v112I~''~va76I~
+            '*          formImage.updateMRUList()     'insrtMRU update Form2 filemanu                             ''~v112I~''~v133R~''~va76I~
+        Catch ex As Exception                                          ''~v112I~''~va76I~
+            exceptionMsg("Form1 MRU_Image", ex)        ''~v112I~       ''~va76R~
+        End Try                                                        ''~v112I~''~va76I~
+    End Sub                                                            ''~v112I~''~va76I~
+    '*************************************************************************''~va76I~
+    Public Sub insertMRUList(Pcase As Integer, Pfnm As String)        ''~7411I~''~7429R~''~7522R~''~va76I~
+        MRU.insertMRUList(Pcase, Pfnm)      '                           ''~7522M~''~va76I~
+        setMRUListMenu(Pcase)                                          ''~7411I~''~va76I~
+        saveMRUList(Pcase)                                             ''~7411I~''~va76I~
+        '*      Select Case Pcase                                              ''~v133I~''~va76R~
+        '*          Case 1 'Image                                              ''~v133I~''~va76R~
+        '*              If formIsAvailable(formImage) Then                          ''~v133I~''~va76R~
+        '*                  formImage.updateMRUList()  '*update form2 File menuitem''~v133I~''~va76R~
+        '*              End If                                                 ''~v133I~''~va76R~
+        '*      End Select                                                     ''~v133I~''~va76R~
+    End Sub                                                            ''~7411I~''~va76I~
+    '*************************************************************************''~v111R~''~va76I~
+    Private Sub exceptionMsg(Pfunction As String, Pex As Exception) ''~v111R~''~va76I~
+        MessageBox.Show(Pex.Message & vbCrLf & Pex.StackTrace, "Exception at " & Pfunction) ''~v111R~''~va76I~
+    End Sub                                                            ''~v111R~''~va76I~
+    '*************************************************************************''~va76I~
+    Private Sub saveMRUList(Pcase As Integer)                          ''~7411R~''~va76I~
+        MRU.saveMRUList(Pcase)                                         ''~7522I~''~va76I~
+    End Sub                                                            ''~va76I~
+    '*************************************************************     ''~v112I~''~va76I~
+    Private Sub openImageBoxForm2(Pfnm As String)                      ''~v112I~''~va76I~
+        openImageBox(Pfnm)                                             ''~va76R~
+    End Sub                                                            ''~v112I~''~va76I~
 End Class

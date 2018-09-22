@@ -70,6 +70,11 @@ Namespace My.Resources
         '''マウスドラッグで囲んでその部分だけ読み取りすることもできます
         '''部分読み取りすると結果が別のフォームに表示されます
         '''OKボタンまたはカット＆ペーストで取り込んでください
+        '''イメージ保存ボタンで囲んだ部分をファイルに出力することもできます
+        '''
+        '''&quot;1°&quot;:
+        '''オン(黄色)にすると回転ボタンで１度づつ回転されます
+        '''少しだけ傾いた画像を読み取るときに使用します
         '''
         '''&quot;読み取り&quot;:
         '''  読み取り結果が下段のテキストフォームに表示されます
@@ -80,10 +85,7 @@ Namespace My.Resources
         '''  Windows10の場合で英語の言語パックは
         '''    コントロールパネル--&gt;言語および地域--&gt;言語、言語の追加
         '''    追加したら右端のオプション--&gt;言語パックをダウンロードしてインストール
-        '''    設定からも&quot;アプリ&quot;,オプション機能の追加、... 光学式文字認識から 
-        '''    言語パックのダウンロードができます
-        '''
-        '''(Form1)                          2017/12/2 [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        '''    設定からも&quot;アプリ&quot; [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         '''</summary>
         Friend ReadOnly Property help_Form1() As String
             Get
@@ -102,11 +104,10 @@ Namespace My.Resources
         '''You can specify a portion to be extracted by mouse dragging.
         '''Extracted text partially is shown on another form.
         '''Use OK button or Copy &amp; Paste to take in the text.
+        '''ImageSave Button enables to save the portion to image file.
         '''
-        '''&quot;Extract&quot;:
-        '''  Extract text from image document.
-        '''  This action take a little bit time.
-        '''  [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        '''&quot;1°&quot;:
+        '''When On(Yellow), rota [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         '''</summary>
         Friend ReadOnly Property help_Form1E() As String
             Get
@@ -155,6 +156,33 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("Icon_sampleVBOCR128", resourceCulture)
                 Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  |新しいファイル| に類似しているローカライズされた文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property MENU_NEWFILE() As String
+            Get
+                Return ResourceManager.GetString("MENU_NEWFILE", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  |新規作成| に類似しているローカライズされた文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property MENU_NEWTEXT() As String
+            Get
+                Return ResourceManager.GetString("MENU_NEWTEXT", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  a に類似しているローカライズされた文字列を検索します。
+        '''</summary>
+        Friend ReadOnly Property STR_NEWFILE() As String
+            Get
+                Return ResourceManager.GetString("STR_NEWFILE", resourceCulture)
             End Get
         End Property
         

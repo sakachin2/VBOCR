@@ -14,5 +14,8 @@
     <Setting Name="CFG_Culture" Type="System.String" Scope="User">
       <Value Profile="(Default)">en-GB</Value>
     </Setting>
+    <Setting Name="CfgMRUImage" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
